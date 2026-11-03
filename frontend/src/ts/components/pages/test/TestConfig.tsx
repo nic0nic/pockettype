@@ -8,6 +8,12 @@ import { restartTestEvent } from "../../../events/test";
 import { createEffectOn } from "../../../hooks/effects";
 import { useRefWithUtils } from "../../../hooks/useRefWithUtils";
 import { t } from "../../../pockettype/i18n";
+import {
+  DAUERN,
+  dauer,
+  istLektionsSeite,
+  setzeDauer,
+} from "../../../pockettype/lektionen";
 import { isAuthenticated } from "../../../states/core";
 import { showModal } from "../../../states/modals";
 import { getResultVisible, getFocus } from "../../../states/test";
@@ -42,9 +48,12 @@ export function TestConfig(): JSXElement {
         )}
         data-ui-element="testConfig"
       >
-        <PuncAndNum />
-        <Mode />
-        <Mode2 />
+        {/* pockettype: auf der Lektionsseite nur die Dauer */}
+        <Show when={!istLektionsSeite()} fallback={<LektionDauer />}>
+          <PuncAndNum />
+          <Mode />
+          <Mode2 />
+        </Show>
       </div>
       <Button
         class={cn(
@@ -81,6 +90,24 @@ function TCButton(props: {
       onClick={props.onClick}
       disabled={getFocus() || getResultVisible() || props.disabled}
     />
+  );
+}
+
+// pockettype: Dauer einer Lektion (0 = ganze Lektion einmal)
+function LektionDauer(): JSXElement {
+  return (
+    <div class={cardClass}>
+      <For each={DAUERN}>
+        {(s) => (
+          <TCButton
+            fa={{ icon: s ? "fa-clock" : "fa-book" }}
+            text={s ? t("lektion.minuten", { n: s / 60 }) : t("lektion.ganz")}
+            active={dauer() === s}
+            onClick={() => setzeDauer(s)}
+          />
+        )}
+      </For>
+    </div>
   );
 }
 

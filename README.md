@@ -18,6 +18,12 @@ pockettype ist eine angepasste Fassung von
 Wie beide steht pockettype unter der **GPL-3.0** (siehe [LICENSE](LICENSE)).
 Name und Logo „Monkeytype“ werden nicht verwendet.
 
+Die Übungslektionen 1–17 („Lektion üben“, `frontend/static/lektionen/`) stammen aus
+[TIPP10](https://www.tipp10.com) 2.1.0 von Tom Thielicke IT Solutions und stehen unter
+der **GPL-2.0** (siehe `frontend/static/lektionen/LICENSE-TIPP10.txt`). Sie sind eine eigene
+Datendatei, die pockettype zur Laufzeit lädt; erzeugt mit `scripts/pockettype/tipp10-lektionen.py`
+aus dem Quellcode-Archiv von TIPP10.
+
 Geändert gegenüber Monkeytype (Stand 03.11.2026):
 
 - kein Monkeytype-Backend, keine Konten, Werbung, Analyse oder Anfragen an fremde Server
@@ -26,6 +32,7 @@ Geändert gegenüber Monkeytype (Stand 03.11.2026):
   (QWERTZ, Umschalt/AltGr zählen doppelt)
 - Farben wie vibe learning (Nord, hell/dunkel), wenige Einstellungen
 - nur Deutsch, Englisch, Französisch, Portugiesisch; drei Schriften; keine Zitate, Challenges, Sounds
+- „Lektion üben“ (`lektionen.html`): die TIPP10-Lektionen in fester Reihenfolge, Auswahl wie die Sprache
 
 ## Bauen
 

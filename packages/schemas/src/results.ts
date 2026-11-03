@@ -73,6 +73,8 @@ const ResultBaseSchema = z.object({
   charStats: CharStatsSchema,
   // pockettype: Anschläge der richtig getippten Wörter (Umschalt/AltGr zählen doppelt)
   anschlaege: z.number().int().nonnegative().optional(),
+  // pockettype: Nummer der TIPP10-Lektion („Lektion üben“)
+  lektion: z.number().int().min(1).max(99).optional(),
   acc: PercentageSchema.min(50),
   mode: ModeSchema,
   mode2: Mode2Schema,

@@ -3,6 +3,12 @@ import { createMemo } from "solid-js";
 import { useActiveTagsLiveQuery } from "../../../../collections/tags";
 import * as Commandline from "../../../../commandline/commandline";
 import { getConfig } from "../../../../config/store";
+import { zeigeAuswahl } from "../../../../pockettype/lektion-auswahl";
+import {
+  istLektionsSeite,
+  lektion,
+  lektionsName,
+} from "../../../../pockettype/lektionen";
 import {
   getCustomTextIndicator,
   getFormatting,
@@ -156,8 +162,17 @@ function Language() {
 
   return (
     <>
+      {/* pockettype: auf der Lektionsseite Lektion wählen wie die Sprache */}
       <Notice
-        when={getConfig.mode !== "zen" && !isUsingPolyglot()}
+        when={istLektionsSeite() && lektion() !== null}
+        icon="fa-book"
+        onClick={zeigeAuswahl}
+        text={lektionsName(lektion()?.nr ?? 1)}
+      />
+      <Notice
+        when={
+          getConfig.mode !== "zen" && !isUsingPolyglot() && !istLektionsSeite()
+        }
         icon="fa-globe-americas"
         openCommandline="language"
         text={getLanguageDisplayString(

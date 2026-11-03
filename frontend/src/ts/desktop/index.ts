@@ -12,6 +12,7 @@ import "../../styles/desktop.scss";
 
 import { applyEngineSettings } from "../anim";
 import { loadFromLocalStorage } from "../config/lifecycle";
+import { initLektionen, istLektionsSeite } from "../pockettype/lektionen";
 import { initTheme } from "../pockettype/theme";
 import { initVibe } from "../pockettype/vibe";
 import { mountDesktopComponents } from "./mount";
@@ -32,7 +33,11 @@ Object.defineProperty(window, "Math", {
 });
 
 applyEngineSettings();
-void loadFromLocalStorage().then(initTheme);
+void loadFromLocalStorage().then(() => {
+  initTheme();
+  // pockettype: Lektionsseite (lektionen.html)
+  if (istLektionsSeite()) void initLektionen();
+});
 // pockettype: in vibe learning (katalog.js geladen) Tastatur für Menü und Anmeldung freigeben
 if ("KATALOG" in window) initVibe();
 mountDesktopComponents();

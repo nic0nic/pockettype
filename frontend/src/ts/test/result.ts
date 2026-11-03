@@ -1,4 +1,9 @@
 import {
+  istLektionsSeite,
+  lektion,
+  lektionsName,
+} from "../pockettype/lektionen";
+import {
   t,
   translateDom,
   unitShort,
@@ -816,7 +821,10 @@ async function updateTags(dontSave: boolean): Promise<void> {
 function updateTestType(randomQuote: Quote | null): void {
   let testType = "";
 
-  testType += t(`mode.${Config.mode}`);
+  testType +=
+    istLektionsSeite() && lektion()
+      ? lektionsName(lektion()?.nr ?? 1)
+      : t(`mode.${Config.mode}`);
 
   if (Config.mode === "time") {
     testType += ` ${Config.time}`;

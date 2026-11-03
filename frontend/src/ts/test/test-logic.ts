@@ -1,3 +1,4 @@
+import { istLektionsSeite, lektion } from "../pockettype/lektionen";
 import Ape from "../ape";
 import * as TestUI from "./test-ui";
 import * as Strings from "../utils/strings";
@@ -776,6 +777,7 @@ function buildCompletedEvent(
     ),
     charStats: [chars.correctWord, chars.incorrect, chars.extra, chars.missed],
     anschlaege: chars.anschlaege,
+    lektion: istLektionsSeite() ? lektion()?.nr : undefined,
     charTotal: chars.allCorrect + chars.incorrect + chars.extra,
     acc: Numbers.roundTo2(getAccuracy(eventLog).percentage),
     language: language,

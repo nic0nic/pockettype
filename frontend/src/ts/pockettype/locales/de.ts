@@ -64,6 +64,10 @@ const de = {
   "testType.stopOnWord": "Stopp bei falschem Wort",
   "testType.deleteOnError": "Löschen bei Fehler",
 
+  // Lektionen
+  "lektion.minuten": "{n} min",
+  "lektion.ganz": "ganze Lektion",
+
   // Leiste über dem Test
   "testConfig.change": "ändern",
 

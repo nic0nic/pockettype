@@ -21,6 +21,8 @@ Läuft als Bereich „Tippen“ in vibe learning (Nachbar-Repo `../vibe-learning
 - `pockettype/theme.ts`: vibe_light/vibe_dark, folgt `data-theme` und `wenn-theme` von vibe learning
 - `pockettype/sync.ts`: Abgleich mit PocketBase (Server: `../vibe-learning/pb_hooks/tippen.pb.js`)
 - `pockettype/vibe.ts`: Tastatur/Fokus für Menüleiste und Anmeldung von vibe learning
+- `pockettype/lektionen.ts`, `lektion-auswahl.ts`: „Lektion üben“ (Seite mit `data-pt="lektionen"`),
+  Daten in `static/lektionen/` (TIPP10, GPL-2.0, nur als Datendatei, nie Code aus TIPP10 übernehmen)
 - `desktop/route-controller.ts`: Unterseiten über `#/settings` usw.
 - `scripts/pockettype/ausduennen.py`, `scripts/pockettype/nach-vibe-learning.sh`
 

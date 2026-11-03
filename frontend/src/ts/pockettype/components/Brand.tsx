@@ -1,10 +1,11 @@
 /* Brand.tsx – Schriftzug „pockettype“ im Stil von vibe learning (.pf-brand in nav.js) */
-import { JSXElement } from "solid-js";
+import { JSXElement, Show } from "solid-js";
 
 import { restartTestEvent } from "../../events/test";
 import { getActivePage } from "../../states/core";
 import { getFocus } from "../../states/test";
 import { cn } from "../../utils/cn";
+import { istLektionsSeite } from "../lektionen";
 
 export function Brand(): JSXElement {
   return (
@@ -26,6 +27,9 @@ export function Brand(): JSXElement {
       }}
     >
       pocket<span class="text-main">type</span>
+      <Show when={istLektionsSeite()}>
+        <span class="ml-[0.4em] font-normal text-sub">Lektionen</span>
+      </Show>
     </a>
   );
 }

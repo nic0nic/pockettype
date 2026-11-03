@@ -482,7 +482,7 @@ export function updateTitle(title?: string): void {
   const local = isDevEnvironment() ? "localhost - " : "";
 
   if (title === undefined || title === "") {
-    document.title = `${local}pockettype – vibe learning`;
+    document.title = `${local}pockettype${document.documentElement.dataset["pt"] === "lektionen" ? " Lektionen" : ""} – vibe learning`;
   } else {
     document.title = local + title;
   }

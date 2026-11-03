@@ -1,7 +1,6 @@
 packages:
   - frontend
   - backend
-  - desktop
   - packages/*
   - frontend/storybook
 

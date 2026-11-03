@@ -22,6 +22,8 @@
     "build": "turbo run build",
     "build-be": "turbo run build --filter @monkeytype/backend",
     "build-fe": "turbo run build --filter @monkeytype/frontend",
+    "build-pockettype": "MONKEYTYPE_DESKTOP=true turbo run build --filter @monkeytype/frontend",
+    "dev-pockettype": "MONKEYTYPE_DESKTOP=true turbo run dev --force --filter @monkeytype/frontend",
     "build-pkg": "turbo run build --filter=\"./packages/*\"",
     "test": "turbo run test integration-test",
     "test-be": "turbo run test integration-test --filter @monkeytype/backend",

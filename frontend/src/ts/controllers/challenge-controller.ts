@@ -264,7 +264,9 @@ export async function setup(challengeName: ChallengeName): Promise<boolean> {
       });
     } else if (settings.type === "script") {
       showLoaderBar();
-      const response = await fetch(`/challenges/${settings.parameters.script}`);
+      const response = await fetch(
+        `${import.meta.env.BASE_URL}challenges/${settings.parameters.script}`,
+      );
       hideLoaderBar();
       if (response.status !== 200) {
         throw new Error(`${response.status} ${response.statusText}`);

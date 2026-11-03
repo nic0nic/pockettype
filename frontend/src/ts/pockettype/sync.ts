@@ -2,7 +2,7 @@
  *
  * Angemeldet ist, wer im localStorage "ts-code" hat (setzt sync.js von vibe learning
  * bei der Anmeldung, löscht es beim Abmelden). Server: pb_hooks/tippen.pb.js.
- * Wem die Daten im Browser gehören, steht unter "pt-besitzer".
+ * Wem die Daten im Browser gehören, steht unter "pockettype.besitzer" (nicht mit „tippen-“ beginnend, das räumt sync.js selbst).
  *
  * abgleichBeimStart(speicher)   einmal nach dem Laden der IndexedDB:
  *   nicht angemeldet, Daten gehören jemandem  -> Browser leeren (Abmelden, Wechsel am Schul-PC)
@@ -12,6 +12,7 @@
  * nachSpeichern(ergebnis, daten)  nach jedem Speichern: neues Ergebnis hochladen,
  *                                 Erfahrungspunkte/Serie gesammelt nachschicken
  * loeschenErlaubt()               false, wenn angemeldet (löschen darf nur die Lehrkraft)
+ * anzeigeName()                   Name für Kopfzeile und Statistik
  *
  * Ohne Verbindung bleibt alles im Browser; fehlende Ergebnisse gehen beim nächsten Start hoch.
  */
@@ -31,8 +32,8 @@ type DesktopData = {
 const API = "/api/trainer/tippen";
 const K = {
   code: "ts-code",
-  besitzer: "pt-besitzer",
-  metaStand: "pt-meta-stand",
+  besitzer: "pockettype.besitzer",
+  metaStand: "pockettype.metaStand",
 };
 
 type Ergebnis = SnapshotResult<Mode>;
@@ -229,6 +230,11 @@ document.addEventListener("visibilitychange", () => {
   metaOffen = undefined;
   metaSenden(m, true).catch(() => undefined);
 });
+
+/** Anzeigename des angemeldeten Schülers (sync.js: "ts-anzeige"), sonst "Gast" */
+export function anzeigeName(): string {
+  return anmeldung() === null ? "Gast" : (ls.get("ts-anzeige") ?? "Gast");
+}
 
 export function loeschenErlaubt(): boolean {
   return anmeldung() === null;

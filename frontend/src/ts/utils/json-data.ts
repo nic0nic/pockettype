@@ -75,7 +75,9 @@ export const cachedFetchJson = memoizeAsync(fetchJson);
  * @throws {Error} If the layout list or layout doesn't exist.
  */
 export async function getLayout(layoutName: string): Promise<LayoutObject> {
-  return await cachedFetchJson<LayoutObject>(`/layouts/${layoutName}.json`);
+  return await cachedFetchJson<LayoutObject>(
+    `${import.meta.env.BASE_URL}layouts/${layoutName}.json`,
+  );
 }
 
 // used for polyglot wordset language-specific properties
@@ -88,7 +90,9 @@ let currentLanguage: LanguageObject;
 
 const cachedFetchLanguage = memoizeAsync(
   async (lang: Language): Promise<LanguageObject> => {
-    const loaded = await fetchJson<LanguageObject>(`/languages/${lang}.json`);
+    const loaded = await fetchJson<LanguageObject>(
+      `${import.meta.env.BASE_URL}languages/${lang}.json`,
+    );
 
     if (!isDevEnvironment()) {
       //check the content to make it less easy to manipulate
@@ -158,7 +162,9 @@ export type FunboxWordOrder = "normal" | "reverse";
  * @returns A promise that resolves to the list of supporters.
  */
 export async function getSupportersList(): Promise<string[]> {
-  const data = await fetchJson<string[]>("/supporters.json");
+  const data = await fetchJson<string[]>(
+    `${import.meta.env.BASE_URL}supporters.json`,
+  );
   return data;
 }
 
@@ -167,7 +173,9 @@ export async function getSupportersList(): Promise<string[]> {
  * @returns A promise that resolves to the list of contributors.
  */
 export async function getContributorsList(): Promise<string[]> {
-  const data = await fetchJson<string[]>("/contributors.json");
+  const data = await fetchJson<string[]>(
+    `${import.meta.env.BASE_URL}contributors.json`,
+  );
   return data;
 }
 

@@ -1,4 +1,20 @@
 <head>
+  <!-- pockettype: Hell/Dunkel wie vibe learning, vor dem ersten Zeichnen -->
+  <script>
+    (function () {
+      var t = null;
+      try {
+        t = localStorage.getItem("wenn-theme");
+      } catch (e) {}
+      document.documentElement.dataset.theme =
+        t ||
+        (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    })();
+  </script>
+  <!-- pockettype: Menüleiste und Anmeldung von vibe learning (pb_public/), fehlen sie, läuft die Seite ohne -->
+  <script src="../katalog.js"></script>
+  <script src="../nav.js"></script>
+  <script src="../sync.js"></script>
   <link
     rel="preload"
     href="/webfonts/RobotoMono-Regular.woff2"

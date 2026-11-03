@@ -74,7 +74,7 @@ async function showPage(page: keyof typeof pageSelectors): Promise<void> {
     } else {
       const pageTitle =
         page === "404" ? "404" : `${page[0]?.toUpperCase()}${page.slice(1)}`;
-      Misc.updateTitle(`${pageTitle} | Monkeytype`);
+      Misc.updateTitle(`${pageTitle} | pockettype`);
     }
 
     firstNavigation = false;
@@ -83,10 +83,22 @@ async function showPage(page: keyof typeof pageSelectors): Promise<void> {
   }
 }
 
+// pockettype: Unterseiten stehen hinter # (z. B. pockettype.html#/settings).
+// So läuft die Seite in jedem Unterordner, und Neuladen landet auf derselben Unterseite.
+// Links mit href="/settings" (router-link) werden darauf umgesetzt.
+function routeOf(target: URL): string {
+  if (target.hash.startsWith("#/")) return target.hash.slice(1);
+  if (
+    target.pathname !== window.location.pathname &&
+    pages.has(target.pathname as DesktopPath)
+  ) {
+    return target.pathname;
+  }
+  return "/";
+}
+
 export async function navigate(
-  url = window.location.pathname +
-    window.location.search +
-    window.location.hash,
+  url = window.location.href,
   options = {} as NavigateOptions,
 ): Promise<void> {
   if (
@@ -105,14 +117,16 @@ export async function navigate(
     return;
   }
 
-  const target = new URL(url, window.location.origin);
-  const routePath = target.pathname === "/desktop.html" ? "/" : target.pathname;
-  const current = new URL(window.location.href);
+  const routePath = routeOf(new URL(url, window.location.href));
+  const wanted =
+    window.location.pathname +
+    window.location.search +
+    (routePath === "/" ? "" : `#${routePath}`);
   if (
-    current.pathname + current.search + current.hash !==
-    target.pathname + target.search + target.hash
+    window.location.pathname + window.location.search + window.location.hash !==
+    wanted
   ) {
-    history.pushState(null, "", target.pathname + target.search + target.hash);
+    history.pushState(null, "", wanted);
   }
   const page = pages.get(routePath as DesktopPath) ?? "404";
   await showPage(page);
@@ -120,6 +134,10 @@ export async function navigate(
 
 window.addEventListener(
   "popstate",
+  () => void navigate(undefined, { force: true }),
+);
+window.addEventListener(
+  "hashchange",
   () => void navigate(undefined, { force: true }),
 );
 

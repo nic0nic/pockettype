@@ -32,19 +32,19 @@ export function Monkey() {
     return (
       <>
         <img
-          src={`/images/monkey/m1${suffix ?? ""}.png`}
+          src={`${import.meta.env.BASE_URL}images/monkey/m1${suffix ?? ""}.png`}
           class={`absolute inset-0 ${cur === "left" ? "visible" : "hidden"}`}
         />
         <img
-          src={`/images/monkey/m2${suffix ?? ""}.png`}
+          src={`${import.meta.env.BASE_URL}images/monkey/m2${suffix ?? ""}.png`}
           class={`absolute inset-0 ${cur === "right" ? "visible" : "hidden"}`}
         />
         <img
-          src={`/images/monkey/m3${suffix ?? ""}.png`}
+          src={`${import.meta.env.BASE_URL}images/monkey/m3${suffix ?? ""}.png`}
           class={`absolute inset-0 ${cur === "none" ? "visible" : "hidden"}`}
         />
         <img
-          src={`/images/monkey/m4${suffix ?? ""}.png`}
+          src={`${import.meta.env.BASE_URL}images/monkey/m4${suffix ?? ""}.png`}
           class={`absolute inset-0 ${cur === "both" ? "visible" : "hidden"}`}
         />
       </>

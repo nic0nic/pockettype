@@ -1,3 +1,4 @@
+import { anzeigeName } from "./pockettype/sync";
 import Ape from "./ape";
 import { showErrorNotification } from "./states/notifications";
 import { isAuthenticated } from "./states/core";
@@ -110,7 +111,7 @@ export async function initSnapshot(): Promise<Snapshot | false> {
   if (envConfig.isDesktop) {
     await initializeDesktopStorage();
     const local = loadDesktopData();
-    snap.name = "local";
+    snap.name = anzeigeName(); // pockettype: Name aus vibe learning
     snap.uid = "local";
     snap.favoriteQuotes = local.favoriteQuotes;
     snap.personalBests = local.personalBests;

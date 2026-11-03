@@ -125,7 +125,7 @@ export function Theme(): JSXElement {
           link.addEventListener("error", onError);
         }
         link.dataset["name"] = name;
-        link.href = `/themes/${name}.css`;
+        link.href = `${import.meta.env.BASE_URL}themes/${name}.css`;
         if (existing === null) document.head.append(link);
       }
 
@@ -133,7 +133,10 @@ export function Theme(): JSXElement {
         document.head.querySelector<HTMLMetaElement>("#metaThemeColor");
       meta?.setAttribute("content", getTheme().bg);
     } else {
-      linkEl()?.setAttribute("href", hasCss ? `/themes/${name}.css` : "");
+      linkEl()?.setAttribute(
+        "href",
+        hasCss ? `${import.meta.env.BASE_URL}themes/${name}.css` : "",
+      );
     }
   });
 

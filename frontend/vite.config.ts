@@ -442,6 +442,8 @@ export default defineConfig(({ mode }): UserConfig => {
             ],
     },
     clearScreen: false,
+    // pockettype: Unterordner auf dem Server, z. B. POCKETTYPE_BASE=/tippen/
+    base: process.env["POCKETTYPE_BASE"] ?? "/",
     root: "src",
     publicDir: "../static",
     optimizeDeps: {

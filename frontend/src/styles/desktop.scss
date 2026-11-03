@@ -14,3 +14,59 @@ body.desktop {
     overflow: hidden;
   }
 }
+
+// pockettype: Farben von vibe learning (pb_public/seite.css) für Menüleiste (nav.js)
+// und Anmeldung (sync.js). Bei Änderungen in seite.css hier mitziehen.
+:root {
+  --bg: #e5e9f0;
+  --panel: #f6f8fb;
+  --panel2: #eceff4;
+  --text: #2e3440;
+  --muted: #5b6578;
+  --border: #cdd3de;
+  --slot: #e5e9f0;
+  --slot-border: #a7b1c2;
+  --accent: #5e81ac;
+  --then: #5e8a45;
+  --else: #a8434d;
+  --err: #a8434d;
+}
+[data-theme="dark"] {
+  --bg: #2e3440;
+  --panel: #3b4252;
+  --panel2: #434c5e;
+  --text: #eceff4;
+  --muted: #a9b3c4;
+  --border: #4c566a;
+  --slot: #434c5e;
+  --slot-border: #616e88;
+  --accent: #88c0d0;
+  --then: #a3be8c;
+  --else: #bf616a;
+  --err: #d4848b;
+}
+
+// pockettype: Monkeytype gibt Links, Knöpfen und Feldern seine Schrift (Monospace).
+// Menüleiste und Anmeldung von vibe learning behalten ihre eigene Schrift.
+.pf-nav,
+.pf-nav a,
+.pf-nav button,
+.ts-wrap,
+.ts-wrap a,
+.ts-wrap button,
+.ts-ov,
+.ts-ov button {
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  letter-spacing: normal;
+}
+.pf-nav .pf-brand {
+  font-family: ui-monospace, Consolas, "Liberation Mono", monospace;
+}
+.ts-ov .ts-in {
+  font-family: ui-monospace, Consolas, monospace;
+}

@@ -13,6 +13,7 @@ import "../../styles/desktop.scss";
 import { applyEngineSettings } from "../anim";
 import { loadFromLocalStorage } from "../config/lifecycle";
 import { initTheme } from "../pockettype/theme";
+import { initVibe } from "../pockettype/vibe";
 import { mountDesktopComponents } from "./mount";
 import "./ready";
 
@@ -32,4 +33,6 @@ Object.defineProperty(window, "Math", {
 
 applyEngineSettings();
 void loadFromLocalStorage().then(initTheme);
+// pockettype: in vibe learning (katalog.js geladen) Tastatur für Menü und Anmeldung freigeben
+if ("KATALOG" in window) initVibe();
 mountDesktopComponents();

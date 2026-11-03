@@ -5,6 +5,7 @@ import { restartTestEvent } from "../../events/test";
 import { getActivePage } from "../../states/core";
 import { getFocus } from "../../states/test";
 import { cn } from "../../utils/cn";
+import { istAufgabenSeite } from "../aufgabe";
 import { istLektionsSeite } from "../lektionen";
 
 export function Brand(): JSXElement {
@@ -27,8 +28,10 @@ export function Brand(): JSXElement {
       }}
     >
       pocket<span class="text-main">type</span>
-      <Show when={istLektionsSeite()}>
-        <span class="ml-[0.4em] font-normal text-sub">Lektionen</span>
+      <Show when={istLektionsSeite() || istAufgabenSeite()}>
+        <span class="ml-[0.4em] font-normal text-sub">
+          {istLektionsSeite() ? "Lektionen" : "Aufgabe"}
+        </span>
       </Show>
     </a>
   );

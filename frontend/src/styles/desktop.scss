@@ -46,6 +46,22 @@ body.desktop {
   --err: #d4848b;
 }
 
+// pockettype: Aufgabenseite ohne Aufgabe (aufgabe.ts)
+html[data-pt-leer] #typingTest,
+html[data-pt-leer] [data-ui-element="testConfig"] {
+  display: none !important;
+}
+.ptHinweis {
+  margin: 4rem auto;
+  max-width: 36rem;
+  padding: 1.5rem 2rem;
+  border-radius: 0.75rem;
+  background: var(--sub-alt-color);
+  color: var(--text-color);
+  text-align: center;
+  font-size: 1.1rem;
+}
+
 // pockettype: Monkeytype gibt Links, Knöpfen und Feldern seine Schrift (Monospace).
 // Menüleiste und Anmeldung von vibe learning behalten ihre eigene Schrift.
 .pf-nav,

@@ -75,6 +75,8 @@ const ResultBaseSchema = z.object({
   anschlaege: z.number().int().nonnegative().optional(),
   // pockettype: Nummer der TIPP10-Lektion („Lektion üben“)
   lektion: z.number().int().min(1).max(99).optional(),
+  // pockettype: id der Tipp-Aufgabe der Lehrkraft
+  aufgabe: z.string().max(20).optional(),
   acc: PercentageSchema.min(50),
   mode: ModeSchema,
   mode2: Mode2Schema,

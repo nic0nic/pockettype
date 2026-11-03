@@ -4,7 +4,8 @@
 # Aufruf im Hauptordner von pockettype:
 #   scripts/pockettype/nach-vibe-learning.sh ../vibe-learning
 #
-# Die Seite heißt dort pockettype.html, dazu lektionen.html („Lektion üben“, gleiche Seite). Die Bereichsseite tippen/index.html gehört
+# Die Seite heißt dort pockettype.html, dazu lektionen.html („Lektion üben“) und aufgabe.html
+# („Aufgabe“), jeweils dieselbe Seite mit anderem data-pt. Die Bereichsseite tippen/index.html gehört
 # zu vibe learning und bleibt erhalten; alles andere in tippen/ wird ersetzt.
 # Dazu kommen LICENSE.txt und QUELLE.txt (Herkunft, Commit).
 # Braucht Node 24 und pnpm (siehe package.json, "engines").
@@ -26,6 +27,9 @@ mv "$ZIEL/desktop.html" "$ZIEL/pockettype.html"
 # Lektionsseite: dieselbe Seite mit data-pt="lektionen" (pockettype/lektionen.ts) und eigener Tool-id
 sed 's/<html lang="de" data-trainer="tippen">/<html lang="de" data-trainer="lektionen" data-pt="lektionen">/' "$ZIEL/pockettype.html" > "$ZIEL/lektionen.html"
 grep -q 'data-pt="lektionen"' "$ZIEL/lektionen.html" || { echo "lektionen.html: data-pt nicht gesetzt"; exit 1; }
+# Aufgabenseite: Text der Lehrkraft abschreiben (pockettype/aufgabe.ts)
+sed 's/<html lang="de" data-trainer="tippen">/<html lang="de" data-trainer="tippaufgabe" data-pt="aufgabe">/' "$ZIEL/pockettype.html" > "$ZIEL/aufgabe.html"
+grep -q 'data-pt="aufgabe"' "$ZIEL/aufgabe.html" || { echo "aufgabe.html: data-pt nicht gesetzt"; exit 1; }
 # GPL-3.0: Lizenz und Hinweis auf den Quellcode gehören zu den ausgelieferten Dateien
 cp LICENSE "$ZIEL/LICENSE.txt"
 printf 'pockettype – gebaut aus https://github.com/nic0nic/pockettype (Commit %s)\nbasiert auf Monkeytype (https://github.com/monkeytypegame/monkeytype) und monkeytype-desktop\nLektionen (lektionen/): TIPP10 2.1.0, Tom Thielicke IT Solutions, GPL-2.0, siehe lektionen/LICENSE-TIPP10.txt\nLizenz: GPL-3.0, siehe LICENSE.txt. Nicht von Hand ändern, sondern im pockettype-Repo\nscripts/pockettype/nach-vibe-learning.sh ausführen.\n' "$(git rev-parse --short HEAD)" > "$ZIEL/QUELLE.txt"

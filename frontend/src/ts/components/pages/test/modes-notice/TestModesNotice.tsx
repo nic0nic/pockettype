@@ -3,7 +3,16 @@ import { createMemo } from "solid-js";
 import { useActiveTagsLiveQuery } from "../../../../collections/tags";
 import * as Commandline from "../../../../commandline/commandline";
 import { getConfig } from "../../../../config/store";
-import { zeigeAuswahl } from "../../../../pockettype/lektion-auswahl";
+import {
+  aufgabe,
+  aufgaben,
+  istAufgabenSeite,
+} from "../../../../pockettype/aufgabe";
+import { t } from "../../../../pockettype/i18n";
+import {
+  zeigeAufgabenAuswahl,
+  zeigeAuswahl,
+} from "../../../../pockettype/lektion-auswahl";
 import {
   istLektionsSeite,
   lektion,
@@ -170,8 +179,19 @@ function Language() {
         text={lektionsName(lektion()?.nr ?? 1)}
       />
       <Notice
+        when={istAufgabenSeite() && aufgabe() !== null}
+        icon="fa-file-alt"
+        onClick={() => {
+          if (aufgaben().length > 1) zeigeAufgabenAuswahl();
+        }}
+        text={`${t("aufgabe.titel")}: ${aufgabe()?.titel ?? ""}${aufgaben().length > 1 ? ` (${t("aufgabe.wechseln", { n: aufgaben().length })})` : ""}`}
+      />
+      <Notice
         when={
-          getConfig.mode !== "zen" && !isUsingPolyglot() && !istLektionsSeite()
+          getConfig.mode !== "zen" &&
+          !isUsingPolyglot() &&
+          !istLektionsSeite() &&
+          !istAufgabenSeite()
         }
         icon="fa-globe-americas"
         openCommandline="language"

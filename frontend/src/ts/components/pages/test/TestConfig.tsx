@@ -7,6 +7,7 @@ import { getConfig } from "../../../config/store";
 import { restartTestEvent } from "../../../events/test";
 import { createEffectOn } from "../../../hooks/effects";
 import { useRefWithUtils } from "../../../hooks/useRefWithUtils";
+import { istAufgabenSeite } from "../../../pockettype/aufgabe";
 import { t } from "../../../pockettype/i18n";
 import {
   DAUERN,
@@ -49,7 +50,14 @@ export function TestConfig(): JSXElement {
         data-ui-element="testConfig"
       >
         {/* pockettype: auf der Lektionsseite nur die Dauer */}
-        <Show when={!istLektionsSeite()} fallback={<LektionDauer />}>
+        <Show
+          when={!istLektionsSeite() && !istAufgabenSeite()}
+          fallback={
+            <Show when={istLektionsSeite()}>
+              <LektionDauer />
+            </Show>
+          }
+        >
           <PuncAndNum />
           <Mode />
           <Mode2 />

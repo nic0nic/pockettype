@@ -23,6 +23,9 @@ Läuft als Bereich „Tippen“ in vibe learning (Nachbar-Repo `../vibe-learning
 - `pockettype/vibe.ts`: Tastatur/Fokus für Menüleiste und Anmeldung von vibe learning
 - `pockettype/lektionen.ts`, `lektion-auswahl.ts`: „Lektion üben“ (Seite mit `data-pt="lektionen"`),
   Daten in `static/lektionen/` (TIPP10, GPL-2.0, nur als Datendatei, nie Code aus TIPP10 übernehmen)
+- `pockettype/aufgabe.ts`: „Aufgabe“ (Seite mit `data-pt="aufgabe"`), Text der Lehrkraft vom Server
+- Neue Felder im Ergebnis nur setzen, wenn sie einen Wert haben: ein Feld mit `undefined` verwirft
+  das ganze Ergebnis (countUndefined in test-logic.ts)
 - `desktop/route-controller.ts`: Unterseiten über `#/settings` usw.
 - `scripts/pockettype/ausduennen.py`, `scripts/pockettype/nach-vibe-learning.sh`
 

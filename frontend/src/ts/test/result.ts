@@ -1,3 +1,4 @@
+import { aufgabe, istAufgabenSeite } from "../pockettype/aufgabe";
 import {
   istLektionsSeite,
   lektion,
@@ -824,7 +825,9 @@ function updateTestType(randomQuote: Quote | null): void {
   testType +=
     istLektionsSeite() && lektion()
       ? lektionsName(lektion()?.nr ?? 1)
-      : t(`mode.${Config.mode}`);
+      : istAufgabenSeite() && aufgabe()
+        ? `${t("aufgabe.titel")}: ${aufgabe()?.titel ?? ""}`
+        : t(`mode.${Config.mode}`);
 
   if (Config.mode === "time") {
     testType += ` ${Config.time}`;

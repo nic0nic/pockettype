@@ -13,6 +13,7 @@
  *                                 Erfahrungspunkte/Serie gesammelt nachschicken
  * loeschenErlaubt()               false, wenn angemeldet (löschen darf nur die Lehrkraft)
  * anzeigeName()                   Name für Kopfzeile und Statistik
+ * meineAufgaben()                 aktive Tipp-Aufgaben der Klasse, null ohne Anmeldung oder Verbindung
  *
  * Ohne Verbindung bleibt alles im Browser; fehlende Ergebnisse gehen beim nächsten Start hoch.
  */
@@ -230,6 +231,22 @@ document.addEventListener("visibilitychange", () => {
   metaOffen = undefined;
   metaSenden(m, true).catch(() => undefined);
 });
+
+export type TippAufgabe = {
+  id: string;
+  titel: string;
+  text: string;
+  bis: string;
+};
+
+export async function meineAufgaben(): Promise<TippAufgabe[] | null> {
+  if (anmeldung() === null) return null;
+  try {
+    return (await api<{ aufgaben: TippAufgabe[] }>("/aufgaben/meine")).aufgaben;
+  } catch {
+    return null;
+  }
+}
 
 /** Anzeigename des angemeldeten Schülers (sync.js: "ts-anzeige"), sonst "Gast" */
 export function anzeigeName(): string {

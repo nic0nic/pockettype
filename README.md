@@ -33,6 +33,8 @@ Geändert gegenüber Monkeytype (Stand 03.11.2026):
 - Farben wie vibe learning (Nord, hell/dunkel), wenige Einstellungen
 - nur Deutsch, Englisch, Französisch, Portugiesisch; drei Schriften; keine Zitate, Challenges, Sounds
 - „Lektion üben“ (`lektionen.html`): die TIPP10-Lektionen in fester Reihenfolge, Auswahl wie die Sprache
+- „Aufgabe“ (`aufgabe.html`): Text der Lehrkraft komplett abschreiben, beliebig oft; nur sichtbar,
+  wenn die Klasse eine aktive Aufgabe hat
 
 ## Bauen
 

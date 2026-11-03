@@ -1,3 +1,4 @@
+import { aufgabe, istAufgabenSeite } from "../pockettype/aufgabe";
 import { istLektionsSeite, lektion } from "../pockettype/lektionen";
 import Ape from "../ape";
 import * as TestUI from "./test-ui";
@@ -777,7 +778,9 @@ function buildCompletedEvent(
     ),
     charStats: [chars.correctWord, chars.incorrect, chars.extra, chars.missed],
     anschlaege: chars.anschlaege,
-    lektion: istLektionsSeite() ? lektion()?.nr : undefined,
+    // pockettype: nur setzen, wenn vorhanden (ein Feld mit undefined verwirft das Ergebnis)
+    ...(istLektionsSeite() && lektion() ? { lektion: lektion()?.nr } : {}),
+    ...(istAufgabenSeite() && aufgabe() ? { aufgabe: aufgabe()?.id } : {}),
     charTotal: chars.allCorrect + chars.incorrect + chars.extra,
     acc: Numbers.roundTo2(getAccuracy(eventLog).percentage),
     language: language,
@@ -928,7 +931,9 @@ export async function finish(difficultyFailed = false): Promise<void> {
     (Config.mode === "words" &&
       mode2Number === 0 &&
       completedEvent.testDuration < 15) ||
+    // pockettype: Aufgaben der Lehrkraft zählen auch mit weniger als 10 Wörtern
     (Config.mode === "custom" &&
+      !istAufgabenSeite() &&
       (CustomText.getLimitMode() === "word" ||
         CustomText.getLimitMode() === "section") &&
       CustomText.getLimitValue() < 10) ||

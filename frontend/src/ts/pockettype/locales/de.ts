@@ -68,6 +68,10 @@ const de = {
   "lektion.minuten": "{n} min",
   "lektion.ganz": "ganze Lektion",
 
+  // Tipp-Aufgabe
+  "aufgabe.titel": "Aufgabe",
+  "aufgabe.wechseln": "{n} Aufgaben – wechseln",
+
   // Leiste über dem Test
   "testConfig.change": "ändern",
 

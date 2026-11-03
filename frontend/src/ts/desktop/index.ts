@@ -12,6 +12,7 @@ import "../../styles/desktop.scss";
 
 import { applyEngineSettings } from "../anim";
 import { loadFromLocalStorage } from "../config/lifecycle";
+import { initAufgaben, istAufgabenSeite } from "../pockettype/aufgabe";
 import { initLektionen, istLektionsSeite } from "../pockettype/lektionen";
 import { initTheme } from "../pockettype/theme";
 import { initVibe } from "../pockettype/vibe";
@@ -37,6 +38,8 @@ void loadFromLocalStorage().then(() => {
   initTheme();
   // pockettype: Lektionsseite (lektionen.html)
   if (istLektionsSeite()) void initLektionen();
+  // pockettype: Aufgabenseite (aufgabe.html)
+  if (istAufgabenSeite()) void initAufgaben();
 });
 // pockettype: in vibe learning (katalog.js geladen) Tastatur für Menü und Anmeldung freigeben
 if ("KATALOG" in window) initVibe();

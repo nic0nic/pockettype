@@ -1475,11 +1475,11 @@ export const themes: Record<ThemeName, Theme> = {
     colorfulError: "#bf616a",
     colorfulErrorExtra: "#793e44",
   },
-  // pockettype: wie vibe learning (seite.css), Akzent wie --r4 in excel/basis.css
+  // pockettype: wie vibe learning (seite.css), Akzent wie der Bereich Tippen in katalog.js (Blau wie Textverarbeitung)
   vibe_light: {
     bg: "#e5e9f0",
-    caret: "#9c5530",
-    main: "#9c5530",
+    caret: "#2b579a",
+    main: "#2b579a",
     sub: "#5b6578",
     subAlt: "#f6f8fb",
     text: "#2e3440",
@@ -1490,8 +1490,8 @@ export const themes: Record<ThemeName, Theme> = {
   },
   vibe_dark: {
     bg: "#2e3440",
-    caret: "#d08770",
-    main: "#d08770",
+    caret: "#8db3ee",
+    main: "#8db3ee",
     sub: "#9aa4b8",
     subAlt: "#3b4252",
     text: "#eceff4",

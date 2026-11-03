@@ -6,6 +6,7 @@ import { getConfig } from "../../../../config/store";
 import {
   aufgabe,
   aufgaben,
+  fortschritt,
   istAufgabenSeite,
 } from "../../../../pockettype/aufgabe";
 import { t } from "../../../../pockettype/i18n";
@@ -184,7 +185,7 @@ function Language() {
         onClick={() => {
           if (aufgaben().length > 1) zeigeAufgabenAuswahl();
         }}
-        text={`${t("aufgabe.titel")}: ${aufgabe()?.titel ?? ""}${aufgaben().length > 1 ? ` (${t("aufgabe.wechseln", { n: aufgaben().length })})` : ""}`}
+        text={`${t("aufgabe.titel")}: ${aufgabe()?.titel ?? ""}${fortschritt() ? ` · ${t("aufgabe.weiter", { wort: (fortschritt()?.wort ?? 0) + 1, gesamt: fortschritt()?.gesamt ?? 0 })}` : ""}${aufgaben().length > 1 ? ` (${t("aufgabe.wechseln", { n: aufgaben().length })})` : ""}`}
       />
       <Notice
         when={

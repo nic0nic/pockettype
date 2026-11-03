@@ -14,10 +14,13 @@ export function Keytips(): JSXElement {
           "opacity-0": getFocus(),
         }}
       >
-        <div class="flex items-center gap-2">
-          <QuickRestartHotkey />
-          <span>- restart test</span>
-        </div>
+        {/* pockettype: auf der Aufgabenseite gibt es keinen Neustart */}
+        <Show when={document.documentElement.dataset["pt"] !== "aufgabe"}>
+          <div class="flex items-center gap-2">
+            <QuickRestartHotkey />
+            <span>- restart test</span>
+          </div>
+        </Show>
 
         <div class="flex items-center gap-2">
           <CommandlineHotkey />

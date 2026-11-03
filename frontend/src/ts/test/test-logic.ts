@@ -1,4 +1,10 @@
-import { aufgabe, istAufgabenSeite } from "../pockettype/aufgabe";
+import {
+  abschliessen,
+  aufgabe,
+  istAufgabenSeite,
+  neustartGesperrt,
+  vorTest,
+} from "../pockettype/aufgabe";
 import { istLektionsSeite, lektion } from "../pockettype/lektionen";
 import Ape from "../ape";
 import * as TestUI from "./test-ui";
@@ -209,6 +215,15 @@ export async function restart(options = {} as RestartOptions): Promise<void> {
     options.event?.preventDefault();
     return;
   }
+  // pockettype: Aufgabe nicht mitten im Durchgang neu beginnen (Fortschritt bleibt erhalten)
+  if (neustartGesperrt()) {
+    options.event?.preventDefault();
+    showNoticeNotification(
+      "Dein Fortschritt wird nach jedem Wort gespeichert. Einen neuen Versuch kannst du starten, wenn der Text fertig ist.",
+      { durationMs: 4000 },
+    );
+    return;
+  }
   if (isTestActive()) {
     if (options.isQuickRestart) {
       if (Config.mode !== "zen") options.event?.preventDefault();
@@ -373,6 +388,8 @@ async function init(): Promise<boolean> {
     return false;
   }
 
+  // pockettype: Aufgabe ab dem gespeicherten Wort fortsetzen
+  vorTest();
   TestWords.words.reset();
   resetActiveWordIndex();
 
@@ -819,6 +836,11 @@ function buildCompletedEvent(
 
   if (completedEvent.mode !== "custom") delete completedEvent.customText;
   if (completedEvent.mode !== "quote") delete completedEvent.quoteLength;
+
+  // pockettype: Aufgabe in Teilen abgeschrieben -> Teile zu einem Durchgang zusammenfassen
+  if (istAufgabenSeite() && !getBailedOut()) {
+    abschliessen(completedEvent, eventLog);
+  }
 
   return completedEvent;
 }

@@ -71,6 +71,8 @@ const de = {
   // Tipp-Aufgabe
   "aufgabe.titel": "Aufgabe",
   "aufgabe.wechseln": "{n} Aufgaben – wechseln",
+  "aufgabe.weiter": "weiter bei Wort {wort} von {gesamt}",
+  "aufgabe.verbessern": "Verbesserungsversuch starten",
 
   // Leiste über dem Test
   "testConfig.change": "ändern",

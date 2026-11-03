@@ -1,7 +1,7 @@
 # pockettype – Hinweise für Claude
 
 Tipptrainer für den Unterricht (Realschule), Fork von Monkeytype über monkeytype-desktop (siehe README.md).
-Läuft als Bereich „Tastaturschreiben“ in vibe learning (Nachbar-Repo `../vibe-learning`, eigene CLAUDE.md dort).
+Läuft als Bereich „Tippen“ in vibe learning (Nachbar-Repo `../vibe-learning`, eigene CLAUDE.md dort).
 
 ## Arbeitsweise
 

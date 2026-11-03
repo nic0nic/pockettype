@@ -2,7 +2,7 @@
 
 Tipptrainer für den Unterricht. Gemessen werden Wörter und Anschläge pro Minute,
 Genauigkeit und Gleichmäßigkeit; Bestwerte und Verlauf bleiben erhalten.
-pockettype läuft als Bereich „Tastaturschreiben“ in der Übungsplattform
+pockettype läuft als Bereich „Tippen“ in der Übungsplattform
 [vibe learning](https://github.com/nic0nic/vibe-learning). Angemeldete Schüler
 speichern ihre Ergebnisse dort in PocketBase, die Lehrkraft sieht sie in der Verwaltung.
 

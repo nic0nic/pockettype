@@ -18,6 +18,11 @@ import { openDB, type DBSchema, type IDBPDatabase } from "idb";
 
 import type { SnapshotResult } from "../constants/default-snapshot";
 
+import {
+  abgleichBeimStart,
+  loeschenErlaubt,
+  nachSpeichern,
+} from "../pockettype/sync";
 import { getDesktopPersonalBestDecision } from "./personal-best";
 import { normalizeResult } from "./result-normalization";
 
@@ -218,7 +223,7 @@ const sanitizeTags = (value: unknown): (UserTag & { active: boolean })[] =>
       })
     : [];
 
-const rebuildHistoryMetadata = (
+export const rebuildHistoryMetadata = (
   current: DesktopData,
   results: SnapshotResult<Mode>[],
 ): DesktopData => {
@@ -300,6 +305,10 @@ const readLegacyData = (storage: Storage | undefined): DesktopData | null => {
   }
 };
 
+// pockettype: Ergebnisse angemeldeter Schüler löscht nur die Lehrkraft
+const nurLehrkraft =
+  "Du bist angemeldet. Ergebnisse kann nur deine Lehrkraft löschen.";
+
 export class DesktopStorage {
   private readonly dbPromise: Promise<IDBPDatabase<DesktopDatabase>>;
   private readonly legacyStorage: Storage | undefined;
@@ -374,8 +383,9 @@ export class DesktopStorage {
         "readwrite",
       );
 
+      let normalized: SnapshotResult<Mode> | undefined;
       if (appendResult !== undefined) {
-        const normalized = normalizeResult(appendResult);
+        normalized = normalizeResult(appendResult);
         await transaction.objectStore("results").put(normalized);
         next.results = [...this.cache.results, normalized];
       }
@@ -385,6 +395,8 @@ export class DesktopStorage {
       await transaction.done;
       this.cache = next;
       dispatchUpdatedEvent();
+      // pockettype: an vibe learning schicken, wenn angemeldet
+      nachSpeichern(normalized, next);
     });
   }
 
@@ -402,6 +414,7 @@ export class DesktopStorage {
   }
 
   async deleteResult(resultId: string): Promise<void> {
+    if (!loeschenErlaubt()) throw new Error(nurLehrkraft);
     return this.enqueue(async () => {
       const database = await this.dbPromise;
       const results = this.cache.results.filter(
@@ -441,6 +454,7 @@ export class DesktopStorage {
   }
 
   async clear(): Promise<void> {
+    if (!loeschenErlaubt()) throw new Error(nurLehrkraft);
     return this.enqueue(async () => {
       const database = await this.dbPromise;
       const empty = defaultDesktopData();
@@ -499,8 +513,23 @@ let desktopStorage: DesktopStorage | undefined;
 const getDesktopStorage = (): DesktopStorage =>
   (desktopStorage ??= new DesktopStorage());
 
-export const initializeDesktopStorage = async (): Promise<DesktopData> =>
-  getDesktopStorage().initialize();
+// pockettype: nach dem ersten Laden einmal mit vibe learning abgleichen
+let abgleich: Promise<void> | undefined;
+
+export const initializeDesktopStorage = async (): Promise<DesktopData> => {
+  const speicher = getDesktopStorage();
+  await speicher.initialize();
+  abgleich ??= abgleichBeimStart({
+    load: () => speicher.load(),
+    replace: async (daten) => speicher.replace(daten),
+    rebuild: rebuildHistoryMetadata,
+    leer: defaultDesktopData,
+  }).catch((err: unknown) => {
+    console.warn("pockettype: Abgleich fehlgeschlagen", err);
+  });
+  await abgleich;
+  return speicher.load();
+};
 
 export const loadDesktopData = (): DesktopData => getDesktopStorage().load();
 

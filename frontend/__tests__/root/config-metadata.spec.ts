@@ -94,8 +94,8 @@ describe("ConfigMeta", () => {
       ],
       customPolyglot: [
         {
-          value: ["english", "polish", "english"],
-          expected: { customPolyglot: ["english", "polish"] },
+          value: ["english", "french", "english"],
+          expected: { customPolyglot: ["english", "french"] },
         },
       ],
       keymapSize: [

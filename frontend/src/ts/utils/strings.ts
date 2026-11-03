@@ -299,10 +299,9 @@ export const CHAR_EQUIVALENCE_SETS = [
   new Set([",", "‚"]),
 ];
 
+// pockettype: russian entfernt, keine sprachspezifischen Gleichsetzungen
 export const LANGUAGE_EQUIVALENCE_SETS: Partial<Record<Language, Set<string>>> =
-  {
-    russian: new Set(["ё", "е", "e"]),
-  };
+  {};
 
 /**
  * Checks if two characters are visually/typographically equivalent for typing purposes.

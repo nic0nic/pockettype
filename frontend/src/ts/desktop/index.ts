@@ -12,6 +12,7 @@ import "../../styles/desktop.scss";
 
 import { applyEngineSettings } from "../anim";
 import { loadFromLocalStorage } from "../config/lifecycle";
+import { initTheme } from "../pockettype/theme";
 import { mountDesktopComponents } from "./mount";
 import "./ready";
 
@@ -30,5 +31,5 @@ Object.defineProperty(window, "Math", {
 });
 
 applyEngineSettings();
-void loadFromLocalStorage();
+void loadFromLocalStorage().then(initTheme);
 mountDesktopComponents();

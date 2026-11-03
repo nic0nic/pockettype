@@ -701,7 +701,8 @@ const list: Partial<Record<FunboxName, FunboxFunctions>> = {
         (!mainLanguageIsRTL && allRightToLeft)
       ) {
         const fallbackLanguage =
-          languages[0]?.name ?? (allRightToLeft ? "arabic" : "english");
+          // pockettype: keine Sprachen mit Schreibrichtung rechts nach links
+          languages[0]?.name ?? "english";
         setConfig("language", fallbackLanguage);
         showNoticeNotification(
           `Language direction conflict: switched to ${fallbackLanguage} for consistency.`,

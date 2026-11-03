@@ -143,9 +143,9 @@ export function DesktopAccountPage(): JSXElement {
 
   const confirmClearHistory = (): void => {
     showSimpleModal({
-      title: "clear local typing data",
-      text: "This permanently removes every result, personal best, and typing statistic from this Mac. Settings and custom appearance files stay unchanged.",
-      buttonText: "clear",
+      title: "Tippdaten löschen",
+      text: "Löscht alle Ergebnisse, Bestwerte und Statistiken in diesem Browser endgültig. Einstellungen bleiben erhalten.",
+      buttonText: "löschen",
       execFn: async () => {
         await clearDesktopData();
         await Promise.all([DB.initSnapshot(), refreshDesktopResults()]);

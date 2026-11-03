@@ -50,7 +50,7 @@ export function FontFamily(): JSXElement {
           <br />
           <div class="mt-2 text-em-xs">
             {envConfig.isDesktop
-              ? "Local fonts stay on this Mac and are included in desktop backups."
+              ? "Eigene Schriften bleiben in diesem Browser."
               : "Note: Local fonts are not sent to the server and will not persist across devices."}
           </div>
         </>

@@ -1,9 +1,10 @@
 import { Config, CustomThemeColors } from "@monkeytype/schemas/configs";
 
 const obj: Config = {
-  theme: "serika_dark",
-  themeLight: "serika",
-  themeDark: "serika_dark",
+  // pockettype: Farben wie vibe learning, Umschalten über pockettype/theme.ts
+  theme: "vibe_dark",
+  themeLight: "vibe_light",
+  themeDark: "vibe_dark",
   autoSwitchTheme: false,
   customTheme: false,
   customThemeColors: [
@@ -29,7 +30,7 @@ const obj: Config = {
   time: 30,
   mode: "time",
   quoteLength: [1],
-  language: "english",
+  language: "german",
   fontSize: 2,
   freedomMode: false,
   difficulty: "normal",
@@ -57,7 +58,7 @@ const obj: Config = {
   keymapMode: "off",
   keymapStyle: "staggered",
   keymapLegendStyle: "lowercase",
-  keymapLayout: "overrideSync",
+  keymapLayout: "qwertz", // pockettype
   keymapKeys: "minimal",
   keymapSize: 1,
   fontFamily: "Roboto_Mono",
@@ -93,7 +94,7 @@ const obj: Config = {
   customBackgroundSize: "cover",
   customBackgroundFilter: [0, 1, 1, 1],
   customLayoutfluid: ["qwerty", "dvorak", "colemak"],
-  customPolyglot: ["english", "spanish", "french", "german"],
+  customPolyglot: ["german", "english", "french"],
   monkeyPowerLevel: "off",
   minBurst: "off",
   minBurstCustomSpeed: 100,

@@ -7,6 +7,7 @@ import { getConfig } from "../../../config/store";
 import { restartTestEvent } from "../../../events/test";
 import { createEffectOn } from "../../../hooks/effects";
 import { useRefWithUtils } from "../../../hooks/useRefWithUtils";
+import { t } from "../../../pockettype/i18n";
 import { isAuthenticated } from "../../../states/core";
 import { showModal } from "../../../states/modals";
 import { getResultVisible, getFocus } from "../../../states/test";
@@ -101,7 +102,11 @@ function PuncAndNum(): JSXElement {
             {(configKey) => (
               <TCButton
                 fa={configMetadata[configKey].fa}
-                text={configMetadata[configKey].displayString ?? configKey}
+                text={
+                  envConfig.isDesktop
+                    ? t(`testType.${configKey}`)
+                    : (configMetadata[configKey].displayString ?? configKey)
+                }
                 active={getConfig[configKey]}
                 disabled={
                   getConfig.mode === "zen" || getConfig.mode === "quote"
@@ -120,7 +125,10 @@ function PuncAndNum(): JSXElement {
 }
 
 function Mode(): JSXElement {
-  const modeOptions = ["time", "words", "quote", "zen", "custom"] as const;
+  // pockettype: ohne Zitate (keine Zitat-Dateien)
+  const modeOptions = envConfig.isDesktop
+    ? (["time", "words", "zen", "custom"] as const)
+    : (["time", "words", "quote", "zen", "custom"] as const);
 
   return (
     <div class={cn("z-2", cardClass)}>
@@ -132,8 +140,10 @@ function Mode(): JSXElement {
               configMetadata.mode.fa
             }
             text={
-              configMetadata.mode.optionsMetadata?.[modeOption]
-                ?.displayString ?? modeOption
+              envConfig.isDesktop
+                ? t(`mode.${modeOption}`)
+                : (configMetadata.mode.optionsMetadata?.[modeOption]
+                    ?.displayString ?? modeOption)
             }
             active={getConfig.mode === modeOption}
             onClick={() => {
@@ -364,7 +374,7 @@ function Mode2Custom(props: ComponentProps<"div">): JSXElement {
   return (
     <div {...props}>
       <TCButton
-        text="change"
+        text={envConfig.isDesktop ? t("testConfig.change") : "change"}
         onClick={() => {
           showModal("CustomText");
         }}

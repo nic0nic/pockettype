@@ -121,6 +121,9 @@ export const ThemeNameSchema = z.enum(
     "night_runner",
     "nord",
     "nord_light",
+    // pockettype: Farben wie vibe learning (Nord, Akzent Orange)
+    "vibe_light",
+    "vibe_dark",
     "norse",
     "oblivion",
     "olive",

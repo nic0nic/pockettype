@@ -60,8 +60,10 @@ export function SettingsPage(): JSXElement {
       <div class="grid gap-8">
         {/* while filtering, only the matching settings stay visible; everything
             else is hidden with css so nothing unmounts while typing */}
-        <QuickNav class={cn(isSettingsSearchActive() && "hidden")} />
-        <Show when={getConfig.showKeyTips}>
+        <Show when={!envConfig.isDesktop}>
+          <QuickNav class={cn(isSettingsSearchActive() && "hidden")} />
+        </Show>
+        <Show when={getConfig.showKeyTips && !envConfig.isDesktop}>
           <div
             class={cn(
               "text-center text-sub",
@@ -77,185 +79,191 @@ export function SettingsPage(): JSXElement {
         <SettingsSearch />
         {/* while filtering, lay the matching sections out with a uniform gap */}
         <div class={cn(isSettingsSearchActive() && "grid gap-8")}>
-          <Section title="behavior">
-            <Show when={isAuthenticated() || envConfig.isDesktop}>
-              <Tags />
-              <Presets />
-            </Show>
-            <Show when={isAuthenticated() || envConfig.isDesktop}>
-              <SearchableAutoSetting key="resultSaving" />
-            </Show>
-            <SearchableAutoSetting key="difficulty" />
-            <SearchableAutoSetting key="quickRestart" />
-            <SearchableAutoSetting key="repeatQuotes" />
-            <SearchableAutoSetting key="blindMode" />
-            <SearchableAutoSetting key="alwaysShowWordsHistory" />
-            <SearchableAutoSetting key="singleListCommandLine" />
-            <MinSpeed />
-            <MinAcc />
-            <MinBurst />
-            <SearchableAutoSetting key="britishEnglish" />
-            <Language />
-            <Funbox />
-            <CustomLayoutfluid />
-            <CustomPolyglot />
-          </Section>
-          <Section title="input">
-            <SearchableAutoSetting key="freedomMode" />
-            <SearchableAutoSetting key="strictSpace" />
-            <SearchableAutoSetting key="oppositeShiftMode" />
-            <SearchableAutoSetting key="stopOnError" />
-            <SearchableAutoSetting key="deleteOnError" />
-            <SearchableAutoSetting key="confidenceMode" />
-            <SearchableAutoSetting key="quickEnd" />
-            <SearchableAutoSetting key="indicateTypos" />
-            <SearchableAutoSetting key="hideExtraLetters" />
-            <SearchableAutoSetting key="compositionDisplay" />
-            <SearchableAutoSetting key="lazyMode" />
-            <Layout />
-            <SearchableAutoSetting key="codeUnindentOnBackspace" />
-          </Section>
-          <Section title="sound">
-            <SoundVolume />
-            <SearchableAutoSetting
-              key="playSoundOnClick"
-              wide
-              onOptionClick={(option) => {
-                if (option === "off") return;
-                void previewClick(option);
-              }}
-            />
-            <SearchableAutoSetting
-              key="playSoundOnError"
-              wide
-              onOptionClick={(option) => {
-                if (option === "off") return;
-                void previewError(option);
-              }}
-            />
-            <SearchableAutoSetting
-              key="playTimeWarning"
-              wide
-              onOptionClick={(option) => {
-                if (option === "off") return;
-                void playTimeWarning();
-              }}
-            />
-          </Section>
-          <Section title="caret">
-            <SearchableAutoSetting key="smoothCaret" />
-            <SearchableAutoSetting key="caretStyle" wide />
-            <PaceCaret />
-            <SearchableAutoSetting key="repeatedPace" />
-            <SearchableAutoSetting key="paceCaretStyle" wide />
-          </Section>
-          <Section title="appearance">
-            <SearchableAutoSetting key="timerStyle" wide />
-            <SearchableAutoSetting key="liveSpeedStyle" />
-            <SearchableAutoSetting key="liveAccStyle" />
-            <SearchableAutoSetting key="liveBurstStyle" />
-            <SearchableAutoSetting key="timerColor" />
-            <SearchableAutoSetting key="timerOpacity" />
-            <SearchableAutoSetting key="highlightMode" wide />
-            <SearchableAutoSetting key="typedEffect" />
-            <SearchableAutoSetting key="tapeMode" />
-            <SearchableAutoSetting key="tapeMargin" />
-            <SearchableAutoSetting key="smoothLineScroll" />
-            <SearchableAutoSetting key="showAllLines" />
-            <SearchableAutoSetting key="alwaysShowDecimalPlaces" />
-            <SearchableAutoSetting key="typingSpeedUnit" />
-            <SearchableAutoSetting key="startGraphsAtZero" />
-            <MaxLineWidth />
-            <SearchableAutoSetting key="fontSize" />
-            <FontFamily />
-            <SearchableAutoSetting key="keymapMode" />
-            <Show when={getConfig.keymapMode !== "off"}>
-              <KeymapLayout />
-              <SearchableAutoSetting key="keymapStyle" wide />
-              <SearchableAutoSetting key="keymapLegendStyle" wide />
-              <SearchableAutoSetting key="keymapKeys" wide />
-              <KeymapSize />
-            </Show>
-          </Section>
-          <Section title="theme">
-            <SearchableAutoSetting key="flipTestColors" />
-            <SearchableAutoSetting key="colorfulMode" />
-            <CustomBackground />
-            <Show when={getConfig.customBackground !== "" || hasLocalBg()}>
-              <CustomBackgroundFilters />
-            </Show>
-            <AutoSwitchTheme />
-            <SearchableAutoSetting key="randomTheme" wide />
-            <Theme />
-          </Section>
-          <Section title="hide elements">
-            <SearchableAutoSetting key="showKeyTips" />
-            <SearchableAutoSetting key="showOutOfFocusWarning" />
-            <SearchableAutoSetting key="capsLockWarning" />
-            <SearchableAutoSetting key="showAverage" />
-          </Section>
-          <Section title="danger zone">
-            <ImportExport />
-            <Show when={!envConfig.isDesktop}>
-              <SearchableAutoSetting key="ads" />
+          {/* pockettype: nur wenige Einstellungen, siehe PockettypeSections */}
+          <Show when={envConfig.isDesktop}>
+            <PockettypeSections />
+          </Show>
+          <Show when={!envConfig.isDesktop}>
+            <Section title="behavior">
+              <Show when={isAuthenticated() || envConfig.isDesktop}>
+                <Tags />
+                <Presets />
+              </Show>
+              <Show when={isAuthenticated() || envConfig.isDesktop}>
+                <SearchableAutoSetting key="resultSaving" />
+              </Show>
+              <SearchableAutoSetting key="difficulty" />
+              <SearchableAutoSetting key="quickRestart" />
+              <SearchableAutoSetting key="repeatQuotes" />
+              <SearchableAutoSetting key="blindMode" />
+              <SearchableAutoSetting key="alwaysShowWordsHistory" />
+              <SearchableAutoSetting key="singleListCommandLine" />
+              <MinSpeed />
+              <MinAcc />
+              <MinBurst />
+              <SearchableAutoSetting key="britishEnglish" />
+              <Language />
+              <Funbox />
+              <CustomLayoutfluid />
+              <CustomPolyglot />
+            </Section>
+            <Section title="input">
+              <SearchableAutoSetting key="freedomMode" />
+              <SearchableAutoSetting key="strictSpace" />
+              <SearchableAutoSetting key="oppositeShiftMode" />
+              <SearchableAutoSetting key="stopOnError" />
+              <SearchableAutoSetting key="deleteOnError" />
+              <SearchableAutoSetting key="confidenceMode" />
+              <SearchableAutoSetting key="quickEnd" />
+              <SearchableAutoSetting key="indicateTypos" />
+              <SearchableAutoSetting key="hideExtraLetters" />
+              <SearchableAutoSetting key="compositionDisplay" />
+              <SearchableAutoSetting key="lazyMode" />
+              <Layout />
+              <SearchableAutoSetting key="codeUnindentOnBackspace" />
+            </Section>
+            <Section title="sound">
+              <SoundVolume />
+              <SearchableAutoSetting
+                key="playSoundOnClick"
+                wide
+                onOptionClick={(option) => {
+                  if (option === "off") return;
+                  void previewClick(option);
+                }}
+              />
+              <SearchableAutoSetting
+                key="playSoundOnError"
+                wide
+                onOptionClick={(option) => {
+                  if (option === "off") return;
+                  void previewError(option);
+                }}
+              />
+              <SearchableAutoSetting
+                key="playTimeWarning"
+                wide
+                onOptionClick={(option) => {
+                  if (option === "off") return;
+                  void playTimeWarning();
+                }}
+              />
+            </Section>
+            <Section title="caret">
+              <SearchableAutoSetting key="smoothCaret" />
+              <SearchableAutoSetting key="caretStyle" wide />
+              <PaceCaret />
+              <SearchableAutoSetting key="repeatedPace" />
+              <SearchableAutoSetting key="paceCaretStyle" wide />
+            </Section>
+            <Section title="appearance">
+              <SearchableAutoSetting key="timerStyle" wide />
+              <SearchableAutoSetting key="liveSpeedStyle" />
+              <SearchableAutoSetting key="liveAccStyle" />
+              <SearchableAutoSetting key="liveBurstStyle" />
+              <SearchableAutoSetting key="timerColor" />
+              <SearchableAutoSetting key="timerOpacity" />
+              <SearchableAutoSetting key="highlightMode" wide />
+              <SearchableAutoSetting key="typedEffect" />
+              <SearchableAutoSetting key="tapeMode" />
+              <SearchableAutoSetting key="tapeMargin" />
+              <SearchableAutoSetting key="smoothLineScroll" />
+              <SearchableAutoSetting key="showAllLines" />
+              <SearchableAutoSetting key="alwaysShowDecimalPlaces" />
+              <SearchableAutoSetting key="typingSpeedUnit" />
+              <SearchableAutoSetting key="startGraphsAtZero" />
+              <MaxLineWidth />
+              <SearchableAutoSetting key="fontSize" />
+              <FontFamily />
+              <SearchableAutoSetting key="keymapMode" />
+              <Show when={getConfig.keymapMode !== "off"}>
+                <KeymapLayout />
+                <SearchableAutoSetting key="keymapStyle" wide />
+                <SearchableAutoSetting key="keymapLegendStyle" wide />
+                <SearchableAutoSetting key="keymapKeys" wide />
+                <KeymapSize />
+              </Show>
+            </Section>
+            <Section title="theme">
+              <SearchableAutoSetting key="flipTestColors" />
+              <SearchableAutoSetting key="colorfulMode" />
+              <CustomBackground />
+              <Show when={getConfig.customBackground !== "" || hasLocalBg()}>
+                <CustomBackgroundFilters />
+              </Show>
+              <AutoSwitchTheme />
+              <SearchableAutoSetting key="randomTheme" wide />
+              <Theme />
+            </Section>
+            <Section title="hide elements">
+              <SearchableAutoSetting key="showKeyTips" />
+              <SearchableAutoSetting key="showOutOfFocusWarning" />
+              <SearchableAutoSetting key="capsLockWarning" />
+              <SearchableAutoSetting key="showAverage" />
+            </Section>
+            <Section title="danger zone">
+              <ImportExport />
+              <Show when={!envConfig.isDesktop}>
+                <SearchableAutoSetting key="ads" />
+                <SearchableSetting
+                  key="cookies"
+                  title="update cookie preferences"
+                  description="If you changed your mind about which cookies you consent to, you can change your preferences here."
+                  fa={{
+                    icon: "fa-cookie-bite",
+                  }}
+                  inputs={
+                    <Button
+                      class="w-full"
+                      onClick={() => {
+                        showModal("Cookies");
+                      }}
+                    >
+                      open
+                    </Button>
+                  }
+                />
+              </Show>
+              <AnimationFpsLimit />
               <SearchableSetting
-                key="cookies"
-                title="update cookie preferences"
-                description="If you changed your mind about which cookies you consent to, you can change your preferences here."
+                key="resetSettings"
+                title="reset settings"
+                description={
+                  <div>
+                    Resets settings to the default (but doesn&apos;t touch your
+                    tags and presets).
+                    <br />
+                    <div class="text-error">You can&apos;t undo this!</div>
+                  </div>
+                }
                 fa={{
-                  icon: "fa-cookie-bite",
+                  icon: "fa-undo",
                 }}
                 inputs={
                   <Button
                     class="w-full"
+                    danger
                     onClick={() => {
-                      showModal("Cookies");
+                      showSimpleModal({
+                        title: "Are you sure?",
+                        buttonText: "reset",
+                        execFn: async () => {
+                          await resetConfig();
+                          await fileStorage.deleteFile("LocalBackgroundFile");
+                          return {
+                            status: "success",
+                            message: "Settings reset",
+                          };
+                        },
+                      });
                     }}
                   >
-                    open
+                    reset settings
                   </Button>
                 }
               />
-            </Show>
-            <AnimationFpsLimit />
-            <SearchableSetting
-              key="resetSettings"
-              title="reset settings"
-              description={
-                <div>
-                  Resets settings to the default (but doesn&apos;t touch your
-                  tags and presets).
-                  <br />
-                  <div class="text-error">You can&apos;t undo this!</div>
-                </div>
-              }
-              fa={{
-                icon: "fa-undo",
-              }}
-              inputs={
-                <Button
-                  class="w-full"
-                  danger
-                  onClick={() => {
-                    showSimpleModal({
-                      title: "Are you sure?",
-                      buttonText: "reset",
-                      execFn: async () => {
-                        await resetConfig();
-                        await fileStorage.deleteFile("LocalBackgroundFile");
-                        return {
-                          status: "success",
-                          message: "Settings reset",
-                        };
-                      },
-                    });
-                  }}
-                >
-                  reset settings
-                </Button>
-              }
-            />
-          </Section>
+            </Section>
+          </Show>
         </div>
 
         <AccountSettingsNotice />
@@ -337,5 +345,73 @@ function Section(props: { title: string; children: JSXElement }): JSXElement {
         <div class={cn("h-16", isSettingsSearchActive() && "hidden")}></div>
       </AnimeShow>
     </div>
+  );
+}
+
+// pockettype: reduzierte Einstellungen für die Schule. Alles andere bleibt auf den
+// Standardwerten (constants/default-config.ts) und ist nur noch über die
+// Befehlszeile erreichbar.
+function PockettypeSections(): JSXElement {
+  return (
+    <>
+      <Section title="Test">
+        <Language />
+        <SearchableAutoSetting key="difficulty" />
+        <SearchableAutoSetting key="stopOnError" />
+        <SearchableAutoSetting key="confidenceMode" />
+        <SearchableAutoSetting key="oppositeShiftMode" />
+        <SearchableAutoSetting key="blindMode" />
+        <SearchableAutoSetting key="quickRestart" />
+      </Section>
+      <Section title="Cursor">
+        <SearchableAutoSetting key="smoothCaret" />
+        <SearchableAutoSetting key="caretStyle" wide />
+        <PaceCaret />
+      </Section>
+      <Section title="Darstellung">
+        <SearchableAutoSetting key="fontSize" />
+        <FontFamily />
+        <SearchableAutoSetting key="timerStyle" wide />
+        <SearchableAutoSetting key="liveSpeedStyle" />
+        <SearchableAutoSetting key="liveAccStyle" />
+        <SearchableAutoSetting key="typingSpeedUnit" />
+        <SearchableAutoSetting key="keymapMode" />
+        <Show when={getConfig.keymapMode !== "off"}>
+          <KeymapLayout />
+          <SearchableAutoSetting key="keymapStyle" wide />
+          <SearchableAutoSetting key="keymapLegendStyle" wide />
+          <KeymapSize />
+        </Show>
+      </Section>
+      <Section title="Zurücksetzen">
+        <SearchableSetting
+          key="resetSettings"
+          title="Einstellungen zurücksetzen"
+          description="Setzt alle Einstellungen auf die Standardwerte zurück. Ergebnisse bleiben erhalten."
+          fa={{ icon: "fa-undo" }}
+          inputs={
+            <Button
+              class="w-full"
+              danger
+              onClick={() => {
+                showSimpleModal({
+                  title: "Wirklich zurücksetzen?",
+                  buttonText: "zurücksetzen",
+                  execFn: async () => {
+                    await resetConfig();
+                    return {
+                      status: "success",
+                      message: "Einstellungen zurückgesetzt",
+                    };
+                  },
+                });
+              }}
+            >
+              zurücksetzen
+            </Button>
+          }
+        />
+      </Section>
+    </>
   );
 }

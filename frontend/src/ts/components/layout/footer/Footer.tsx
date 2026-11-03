@@ -1,6 +1,7 @@
 import { JSXElement, Show } from "solid-js";
 import { envConfig } from "virtual:env-config";
 
+import { ThemeToggle } from "../../../pockettype/components/ThemeToggle";
 import { getIsScreenshotting } from "../../../states/core";
 import { showModal } from "../../../states/modals";
 import { getFocus } from "../../../states/test";
@@ -131,8 +132,26 @@ function DesktopFooter(): JSXElement {
           "opacity-0": getFocus(),
         })}
       >
-        <span>local-only macOS app</span>
-        <ThemeIndicator />
+        {/* pockettype: Hinweis auf Herkunft und Quellcode (GPL-3.0) */}
+        <span>
+          pockettype basiert auf{" "}
+          <a
+            href="https://github.com/monkeytypegame/monkeytype"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            Monkeytype
+          </a>{" "}
+          · GPL-3.0 ·{" "}
+          <a
+            href="https://github.com/nic0nic/pockettype"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            Quellcode
+          </a>
+        </span>
+        <ThemeToggle />
       </div>
     </footer>
   );

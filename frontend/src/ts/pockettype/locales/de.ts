@@ -64,6 +64,9 @@ const de = {
   "testType.stopOnWord": "Stopp bei falschem Wort",
   "testType.deleteOnError": "Löschen bei Fehler",
 
+  // Leiste über dem Test
+  "testConfig.change": "ändern",
+
   // Sonstiges
   "other.failed": "nicht bestanden ({reason})",
   "other.afkDetected": "Inaktivität erkannt",

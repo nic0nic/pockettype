@@ -64,7 +64,7 @@ export function CustomBackground(): JSXElement {
       description={
         <>
           {envConfig.isDesktop
-            ? "Choose a local image to use as the custom background. It stays on this Mac."
+            ? "Choose a local image to use as the custom background. It stays in this browser."
             : configMetadata.customBackground.description}
           <br />
           <div class="mt-2 text-em-xs">

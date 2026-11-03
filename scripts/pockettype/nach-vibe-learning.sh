@@ -6,6 +6,7 @@
 #
 # Die Seite heißt dort pockettype.html. Die Bereichsseite tippen/index.html gehört
 # zu vibe learning und bleibt erhalten; alles andere in tippen/ wird ersetzt.
+# Dazu kommen LICENSE.txt und QUELLE.txt (Herkunft, Commit).
 # Braucht Node 24 und pnpm (siehe package.json, "engines").
 set -euo pipefail
 
@@ -22,4 +23,7 @@ mkdir -p "$ZIEL"
 find "$ZIEL" -mindepth 1 -maxdepth 1 ! -name index.html -exec rm -rf {} +
 cp -r frontend/dist/. "$ZIEL/"
 mv "$ZIEL/desktop.html" "$ZIEL/pockettype.html"
+# GPL-3.0: Lizenz und Hinweis auf den Quellcode gehören zu den ausgelieferten Dateien
+cp LICENSE "$ZIEL/LICENSE.txt"
+printf 'pockettype – gebaut aus https://github.com/nic0nic/pockettype (Commit %s)\nbasiert auf Monkeytype (https://github.com/monkeytypegame/monkeytype) und monkeytype-desktop\nLizenz: GPL-3.0, siehe LICENSE.txt. Nicht von Hand ändern, sondern im pockettype-Repo\nscripts/pockettype/nach-vibe-learning.sh ausführen.\n' "$(git rev-parse --short HEAD)" > "$ZIEL/QUELLE.txt"
 echo "pockettype nach $ZIEL kopiert ($(du -sh "$ZIEL" | cut -f1))"

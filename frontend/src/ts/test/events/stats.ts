@@ -490,6 +490,7 @@ export function getChars(
   const acc: CharCounts = {
     allCorrect: 0,
     correctWord: 0,
+    anschlaege: 0,
     incorrect: 0,
     extra: 0,
     missed: 0,
@@ -506,6 +507,7 @@ export function getChars(
     );
     acc.allCorrect += c.allCorrect;
     acc.correctWord += c.correctWord;
+    acc.anschlaege += c.anschlaege;
     acc.incorrect += c.incorrect;
     acc.extra += c.extra;
     acc.missed += c.missed;

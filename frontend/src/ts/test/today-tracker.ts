@@ -1,3 +1,4 @@
+import { t } from "../pockettype/i18n";
 import { __nonReactive } from "../collections/results";
 import * as DateTime from "../utils/date-and-time";
 
@@ -18,7 +19,7 @@ export function addSeconds(s: number): void {
 
 export function getString(): string {
   const secString = DateTime.secondsToString(Math.round(seconds), true, true);
-  return secString + (addedAllToday ? " today" : " session");
+  return `${secString} ${t(addedAllToday ? "today.today" : "today.session")}`;
 }
 
 export function addAllFromToday(): void {

@@ -1,3 +1,10 @@
+import {
+  t,
+  translateDom,
+  unitShort,
+  unitLong,
+  type I18nKey,
+} from "../pockettype/i18n";
 //TODO: use Format
 import { Chart, type PluginChartOptions } from "chart.js";
 
@@ -114,7 +121,7 @@ async function updateChartData(): Promise<void> {
 
   const typingSpeedUnit = getTypingSpeedUnit(Config.typingSpeedUnit);
   ChartController.result.getScale("wpm").title.text =
-    typingSpeedUnit.fullUnitString;
+    unitLong(Config.typingSpeedUnit) || typingSpeedUnit.fullUnitString;
 
   const labels = getTimerBoundaryLabels(eventLog, false);
 
@@ -322,7 +329,7 @@ export async function updateChartPBLine(): Promise<void> {
       padding: 3,
       borderRadius: 3,
       position: "center",
-      content: ` PB: ${chartlpb} `,
+      content: t("pb.line", { n: chartlpb }),
       display: true,
     },
   });
@@ -334,10 +341,13 @@ function updateWpmAndAcc(): void {
     inf = true;
   }
 
-  qs("#result .stats .wpm .top .text")?.setText(Config.typingSpeedUnit);
+  translateDom(qs("#result")?.native);
+  qs("#result .stats .wpm .top .text")?.setText(
+    unitShort(Config.typingSpeedUnit),
+  );
 
   if (inf) {
-    qs("#result .stats .wpm .bottom")?.setText("Infinite");
+    qs("#result .stats .wpm .bottom")?.setText(t("result.infinite"));
   } else {
     qs("#result .stats .wpm .bottom")?.setText(Format.typingSpeed(result.wpm));
   }
@@ -373,13 +383,16 @@ function updateWpmAndAcc(): void {
 
       qs("#result .stats .acc .bottom")?.setAttribute(
         "aria-label",
-        `${acc.correct} correct\n${acc.incorrect} incorrect`,
+        t("result.correctIncorrect", {
+          correct: acc.correct,
+          incorrect: acc.incorrect,
+        }),
       );
     } else {
       //not showing decimal places
       const decimalsAndSuffix = {
         showDecimalPlaces: true,
-        suffix: ` ${Config.typingSpeedUnit}`,
+        suffix: ` ${unitShort(Config.typingSpeedUnit)}`,
       };
       let wpmHover = Format.typingSpeed(result.wpm, decimalsAndSuffix);
       let rawWpmHover = Format.typingSpeed(result.rawWpm, decimalsAndSuffix);
@@ -402,7 +415,10 @@ function updateWpmAndAcc(): void {
             result.acc === 100
               ? "100%"
               : Format.percentage(result.acc, { showDecimalPlaces: true })
-          }\n${acc.correct} correct\n${acc.incorrect} incorrect`,
+          }\n${t("result.correctIncorrect", {
+            correct: acc.correct,
+            incorrect: acc.incorrect,
+          })}`,
         )
         ?.setAttribute("data-balloon-break", "");
     }
@@ -418,13 +434,13 @@ function updateConsistency(): void {
       "aria-label",
       Format.percentage(result.keyConsistency, {
         showDecimalPlaces: true,
-        suffix: " key",
+        suffix: " Tasten",
       }),
     );
   } else {
     qs("#result .stats .consistency .bottom")?.setAttribute(
       "aria-label",
-      `${result.consistency}% (${result.keyConsistency}% key)`,
+      `${result.consistency} % (${t("result.keyConsistency", { n: result.keyConsistency })})`,
     );
   }
 }
@@ -436,12 +452,12 @@ function updateTime(): void {
   qs("#result .stats .time .bottom .afk")?.setText("");
   if (afkSecondsPercent > 0) {
     qs("#result .stats .time .bottom .afk")?.setText(
-      `${afkSecondsPercent}% afk`,
+      t("result.afk", { n: afkSecondsPercent }),
     );
   }
   qs("#result .stats .time .bottom")?.setAttribute(
     "aria-label",
-    `${result.afkDuration}s afk ${afkSecondsPercent}%`,
+    t("result.afkTooltip", { s: result.afkDuration, n: afkSecondsPercent }),
   );
 
   if (Config.alwaysShowDecimalPlaces) {
@@ -458,9 +474,11 @@ function updateTime(): void {
     qs("#result .stats .time .bottom .text")?.setText(time);
     qs("#result .stats .time .bottom")?.setAttribute(
       "aria-label",
-      `${Numbers.roundTo2(result.testDuration)}s (${
-        result.afkDuration
-      }s afk ${afkSecondsPercent}%)`,
+      t("result.timeTooltip", {
+        t: Numbers.roundTo2(result.testDuration),
+        s: result.afkDuration,
+        n: afkSecondsPercent,
+      }),
     );
   }
 }
@@ -477,6 +495,25 @@ function updateKey(): void {
       result.charStats[3]
     }`,
   );
+  updateAnschlaege();
+}
+
+// pockettype: Anschläge pro Minute, Tooltip mit Gesamtzahl
+function updateAnschlaege(): void {
+  const anschlaege = result.anschlaege ?? 0;
+  const proMinute =
+    result.testDuration > 0
+      ? Math.round((anschlaege / result.testDuration) * 60)
+      : 0;
+  qs("#result .stats .anschlaege .bottom")
+    ?.setText(`${proMinute}`)
+    ?.setAttribute(
+      "aria-label",
+      t("result.keystrokes.tooltip", {
+        n: anschlaege,
+        t: Math.round(result.testDuration),
+      }),
+    );
 }
 
 export function showCrown(type: PbCrown.CrownType): void {
@@ -547,16 +584,17 @@ export async function updateCrown(dontSave: boolean): Promise<void> {
       console.debug("Showing warning crown");
       showCrown("warning");
       updateCrownText(
-        `This result is not eligible for a new PB (${canGetPb.reason})`,
+        t("pb.notEligible", { reason: pbReason(canGetPb.reason) }),
         true,
       );
     } else {
       console.debug("Showing ineligible crown");
       showCrown("ineligible");
       updateCrownText(
-        `You could've gotten a new PB (+${Format.typingSpeed(pbDiff, {
-          showDecimalPlaces: true,
-        })}), but your config does not allow it (${canGetPb.reason})`,
+        t("pb.couldHave", {
+          n: Format.typingSpeed(pbDiff, { showDecimalPlaces: true }),
+          reason: pbReason(canGetPb.reason),
+        }),
         true,
       );
     }
@@ -572,10 +610,17 @@ export function showErrorCrownIfNeeded(): void {
   if (PbCrown.getCurrentType() !== "pending") return;
   PbCrown.show();
   PbCrown.update("error");
-  updateCrownText(
-    `Local PB data is out of sync with the server - please refresh (pb mismatch)`,
-    true,
-  );
+  updateCrownText(t("pb.mismatch"), true);
+}
+
+// pockettype: Begründung aus resultCanGetPb() auf Deutsch
+function pbReason(reason: string | undefined): string {
+  const keys: Record<string, I18nKey> = {
+    funbox: "pb.reason.funbox",
+    "stop on letter": "pb.reason.stopOnLetter",
+    "bailed out": "pb.reason.bailedOut",
+  };
+  return t(keys[reason ?? ""] ?? "pb.reason.unknown");
 }
 
 type CanGetPbObject = {
@@ -771,7 +816,7 @@ async function updateTags(dontSave: boolean): Promise<void> {
 function updateTestType(randomQuote: Quote | null): void {
   let testType = "";
 
-  testType += Config.mode;
+  testType += t(`mode.${Config.mode}`);
 
   if (Config.mode === "time") {
     testType += ` ${Config.time}`;
@@ -779,7 +824,8 @@ function updateTestType(randomQuote: Quote | null): void {
     testType += ` ${Config.words}`;
   } else if (Config.mode === "quote") {
     if (randomQuote?.group !== undefined) {
-      testType += ` ${["short", "medium", "long", "thicc"][randomQuote.group]}`;
+      const group = ["short", "medium", "long", "thicc"][randomQuote.group];
+      testType += ` ${t(`quote.${group}` as I18nKey)}`;
     }
   }
   const ignoresLanguage = isFunboxActiveWithProperty("ignoresLanguage");
@@ -787,30 +833,30 @@ function updateTestType(randomQuote: Quote | null): void {
     testType += `<br>${Strings.getLanguageDisplayString(result.language)}`;
   }
   if (Config.punctuation) {
-    testType += "<br>punctuation";
+    testType += `<br>${t("testType.punctuation")}`;
   }
   if (Config.numbers) {
-    testType += "<br>numbers";
+    testType += `<br>${t("testType.numbers")}`;
   }
   if (Config.blindMode) {
-    testType += "<br>blind";
+    testType += `<br>${t("testType.blind")}`;
   }
   if (Config.lazyMode) {
-    testType += "<br>lazy";
+    testType += `<br>${t("testType.lazy")}`;
   }
   if (Config.funbox.length > 0) {
     testType += `<br>${Config.funbox.map((it) => it.replace(/_/g, " ")).join(", ")}`;
   }
   if (Config.difficulty === "expert") {
-    testType += "<br>expert";
+    testType += `<br>${t("testType.expert")}`;
   } else if (Config.difficulty === "master") {
-    testType += "<br>master";
+    testType += `<br>${t("testType.master")}`;
   }
   if (Config.stopOnError !== "off") {
-    testType += `<br>stop on ${Config.stopOnError}`;
+    testType += `<br>${t(Config.stopOnError === "letter" ? "testType.stopOnLetter" : "testType.stopOnWord")}`;
   }
   if (Config.deleteOnError !== "off") {
-    testType += `<br>delete on ${Config.deleteOnError.replace(/_/g, " ")}`;
+    testType += `<br>${t("testType.deleteOnError")}`;
   }
 
   qsa("#result .stats .testType .bottom")?.setHtml(testType);
@@ -825,13 +871,13 @@ function updateOther(
 ): void {
   let otherText = "";
   if (difficultyFailed) {
-    otherText += `<br>failed (${failReason})`;
+    otherText += `<br>${t("other.failed", { reason: failReason })}`;
   }
   if (afkDetected) {
-    otherText += "<br>afk detected";
+    otherText += `<br>${t("other.afkDetected")}`;
   }
   if (isTestInvalid()) {
-    otherText += "<br>invalid";
+    otherText += `<br>${t("other.invalid")}`;
     const extra: string[] = [];
     if (
       result.wpm < 0 ||
@@ -857,13 +903,13 @@ function updateOther(
     }
   }
   if (isRepeated) {
-    otherText += "<br>repeated";
+    otherText += `<br>${t("other.repeated")}`;
   }
   if (result.bailedOut) {
-    otherText += "<br>bailed out";
+    otherText += `<br>${t("other.bailedOut")}`;
   }
   if (tooShort) {
-    otherText += "<br>too short";
+    otherText += `<br>${t("other.tooShort")}`;
   }
 
   if (otherText === "") {

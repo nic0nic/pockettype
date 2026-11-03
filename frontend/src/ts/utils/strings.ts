@@ -1,4 +1,6 @@
 import { Language } from "@monkeytype/schemas/languages";
+import { anschlaegeFuerZeichen } from "../pockettype/anschlaege";
+import { languageName } from "../pockettype/i18n";
 
 /**
  * Removes accents from a string.
@@ -154,7 +156,7 @@ export function getLanguageDisplayString(
   } else {
     out = language;
   }
-  return replaceUnderscoresWithSpaces(out);
+  return replaceUnderscoresWithSpaces(languageName(out));
 }
 
 /**
@@ -409,6 +411,8 @@ export function replaceSpacesWithUnderscores(text: string): string {
 export type CharCounts = {
   allCorrect: number;
   correctWord: number;
+  /** pockettype: Anschläge der Zeichen, die in correctWord zählen */
+  anschlaege: number;
   incorrect: number;
   extra: number;
   missed: number;
@@ -421,6 +425,7 @@ export function countChars(
 ): CharCounts {
   let allCorrect = 0;
   let correctWord = 0;
+  let anschlaege = 0;
   let incorrect = 0;
   let extra = 0;
   let missed = 0;
@@ -440,6 +445,7 @@ export function countChars(
       }
       if (wordCorrect || (creditPartial && wordPartiallyCorrect)) {
         correctWord += 1;
+        anschlaege += anschlaegeFuerZeichen(targetChar as string);
       }
     } else if (inputChar === undefined) {
       //missed char
@@ -461,6 +467,7 @@ export function countChars(
   return {
     allCorrect,
     correctWord,
+    anschlaege,
     incorrect,
     extra,
     missed,

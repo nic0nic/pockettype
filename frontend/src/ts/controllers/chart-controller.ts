@@ -1,3 +1,4 @@
+import { t } from "../pockettype/i18n";
 import * as ResultWordHighlight from "../elements/result-word-highlight";
 
 import {
@@ -249,7 +250,7 @@ export const result = new ChartWithUpdateColors<
         position: "right",
         title: {
           display: true,
-          text: "Errors",
+          text: t("chart.axis.errors"),
         },
         beginAtZero: true,
         ticks: {

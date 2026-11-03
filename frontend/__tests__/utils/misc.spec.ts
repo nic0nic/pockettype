@@ -22,22 +22,22 @@ describe("misc.ts", () => {
         {
           input: "english",
           noSizeString: false,
-          expected: "english",
+          expected: "englisch", // pockettype: deutsche Sprachnamen
         },
         {
           input: "english_1k",
           noSizeString: false,
-          expected: "english 1k",
+          expected: "englisch 1k",
         },
         {
           input: "english_1k",
           noSizeString: true,
-          expected: "english",
+          expected: "englisch",
         },
         {
           input: "english_medical",
           noSizeString: false,
-          expected: "english medical",
+          expected: "englisch medical",
         },
         {
           input: "arabic_egypt_1k",

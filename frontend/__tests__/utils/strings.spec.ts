@@ -955,7 +955,16 @@ describe("string utils", () => {
             input.targetWord,
             input.creditPartial,
           ),
-        ).toEqual(expected);
+          // pockettype: countChars liefert zusätzlich anschlaege
+        ).toMatchObject(expected);
+      });
+
+      it("zählt Anschläge nur für richtig getippte Wörter", () => {
+        expect(Strings.countChars("Hallo ", "Hallo ", false).anschlaege).toBe(
+          7,
+        );
+        expect(Strings.countChars("Halo ", "Hallo ", false).anschlaege).toBe(0);
+        expect(Strings.countChars("Hal", "Hallo ", true).anschlaege).toBe(4);
       });
     });
   });

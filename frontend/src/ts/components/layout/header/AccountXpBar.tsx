@@ -11,6 +11,7 @@ import {
 import { createEvent } from "../../../hooks/createEvent";
 import { createSignalWithSetters } from "../../../hooks/createSignalWithSetters";
 import { createEffectOn } from "../../../hooks/effects";
+import { xpLabel } from "../../../pockettype/i18n";
 import {
   skipBreakdownEvent,
   getXpBarData,
@@ -72,7 +73,7 @@ export function AccountXpBar(): JSXElement {
   });
 
   const addItem = (label: string, amount: number | string): void => {
-    setBreakdownItems((items) => [...items, { label, amount }]);
+    setBreakdownItems((items) => [...items, { label: xpLabel(label), amount }]);
   };
 
   skipBreakdownEvent.useListener(async () => {

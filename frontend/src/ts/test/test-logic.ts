@@ -775,6 +775,7 @@ function buildCompletedEvent(
       calculateWpm(chars.allCorrect + chars.incorrect + chars.extra, duration),
     ),
     charStats: [chars.correctWord, chars.incorrect, chars.extra, chars.missed],
+    anschlaege: chars.anschlaege,
     charTotal: chars.allCorrect + chars.incorrect + chars.extra,
     acc: Numbers.roundTo2(getAccuracy(eventLog).percentage),
     language: language,

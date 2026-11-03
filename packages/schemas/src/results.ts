@@ -71,6 +71,8 @@ const ResultBaseSchema = z.object({
   wpm: WpmSchema,
   rawWpm: WpmSchema,
   charStats: CharStatsSchema,
+  // pockettype: Anschläge der richtig getippten Wörter (Umschalt/AltGr zählen doppelt)
+  anschlaege: z.number().int().nonnegative().optional(),
   acc: PercentageSchema.min(50),
   mode: ModeSchema,
   mode2: Mode2Schema,

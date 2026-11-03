@@ -21,22 +21,23 @@
         <div class="bottom" aria-label="" data-balloon-pos="up">-</div>
       </div>
       <div class="group acc">
-        <div class="top">acc</div>
+        <div class="top" data-i18n="result.acc">acc</div>
         <div class="bottom" aria-label="" data-balloon-pos="up">-</div>
       </div>
     </div>
     <div class="stats morestats">
       <div class="group testType">
-        <div class="top">test type</div>
+        <div class="top" data-i18n="result.testType">test type</div>
         <div class="bottom">-</div>
         <div class="tags resultTags hidden">
           <div class="top">
-            <span>tags</span>
+            <span data-i18n="result.tags">tags</span>
             <div
               class="textButton editTagsButton"
               result-id=""
               active-tag-ids=""
               aria-label="Edit tags"
+              data-i18n-aria="result.editTags"
               role="button"
               data-balloon-pos="right"
             >
@@ -48,21 +49,22 @@
       </div>
       <!-- <div class="group infoAndTags"> -->
       <div class="group info">
-        <div class="top">other</div>
+        <div class="top" data-i18n="result.other">other</div>
         <div class="bottom">-</div>
       </div>
 
       <!-- </div> -->
       <!-- <div class="subgroup"> -->
       <div class="group raw">
-        <div class="top">raw</div>
+        <div class="top" data-i18n="result.raw">raw</div>
         <div class="bottom" aria-label="" data-balloon-pos="up">-</div>
       </div>
       <div class="group key">
-        <div class="top">characters</div>
+        <div class="top" data-i18n="result.characters">characters</div>
         <div
           class="bottom"
           aria-label="correct&NewLine;incorrect&NewLine;extra&NewLine;missed"
+          data-i18n-aria="result.characters.tooltip"
           data-balloon-break=""
           data-balloon-pos="up"
         >
@@ -70,15 +72,20 @@
         </div>
       </div>
 
+      <div class="group anschlaege">
+        <div class="top" data-i18n="result.keystrokes">keystrokes/min</div>
+        <div class="bottom" aria-label="" data-balloon-pos="up">-</div>
+      </div>
+
       <!-- </div> -->
 
       <!-- <div class="subgroup"> -->
       <div class="group flat consistency">
-        <div class="top">consistency</div>
+        <div class="top" data-i18n="result.consistency">consistency</div>
         <div class="bottom" aria-label="" data-balloon-pos="up">2 -</div>
       </div>
       <div class="group time">
-        <div class="top">time</div>
+        <div class="top" data-i18n="result.time">time</div>
         <div class="bottom" aria-label="" data-balloon-pos="up">
           <div class="text">-</div>
           <div class="afk"></div>
@@ -88,10 +95,13 @@
       <!-- </div> -->
 
       <div class="group dailyLeaderboard hidden">
-        <div class="top">daily leaderboard</div>
+        <div class="top" data-i18n="result.dailyLeaderboard">
+          daily leaderboard
+        </div>
         <div
           id="dailyLeaderboardRank"
           aria-label="Show daily leaderboard"
+          data-i18n-aria="result.showDailyLeaderboard"
           data-balloon-pos="up"
           class="bottom"
         >
@@ -101,11 +111,12 @@
 
       <div class="group source hidden">
         <div class="top">
-          <span class="sourceLabel">source</span>
+          <span class="sourceLabel" data-i18n="result.source">source</span>
           <span
             id="reportQuoteButton"
             class="textButton hidden"
             aria-label="Report quote"
+            data-i18n-aria="result.reportQuote"
             data-balloon-pos="up"
           >
             <i class="icon fas fa-fw fa-flag"></i>
@@ -114,6 +125,7 @@
             id="favoriteQuoteButton"
             class="textButton hidden"
             aria-label="Favorite quote"
+            data-i18n-aria="result.favoriteQuote"
             data-balloon-pos="up"
           >
             <i class="icon far fa-fw fa-heart"></i>
@@ -122,6 +134,7 @@
             id="rateQuoteButton"
             class="textButton hidden"
             aria-label="Rate quote"
+            data-i18n-aria="result.rateQuote"
             data-balloon-pos="up"
           >
             <i class="icon far fa-fw fa-star"></i>
@@ -135,28 +148,28 @@
       <div class="chartLegend">
         <button class="text active" tabindex="-1" data-id="scale">
           <i class="fas fa-chart-line"></i>
-          <div class="text">scale</div>
+          <div class="text" data-i18n="chart.scale">scale</div>
         </button>
         <button class="text" tabindex="-1" data-id="pbLine">
           <i class="fas fa-crown"></i>
-          <div class="text">pb</div>
+          <div class="text" data-i18n="chart.pb">pb</div>
         </button>
         <button class="text" tabindex="-1" data-id="tagPbLine">
           <i class="fas fa-tag"></i>
-          <div class="text">tag pb</div>
+          <div class="text" data-i18n="chart.tagPb">tag pb</div>
         </button>
         <button class="text" tabindex="-1" data-id="raw">
           <div class="line dashed"></div>
-          <div class="text">raw</div>
+          <div class="text" data-i18n="chart.raw">raw</div>
         </button>
         <button class="text" tabindex="-1" data-id="burst">
           <div class="line"></div>
-          <div class="text">burst</div>
+          <div class="text" data-i18n="chart.burst">burst</div>
         </button>
         <button class="text" tabindex="-1" data-id="errors">
           <!-- <div class="line"></div> -->
           <i class="fas fa-times"></i>
-          <div class="text">errors</div>
+          <div class="text" data-i18n="chart.errors">errors</div>
         </button>
       </div>
       <!-- <div class="title">wpm over time</div> -->
@@ -165,11 +178,12 @@
     <div class="bottom">
       <div id="resultWordsHistory" class="hidden">
         <div class="title">
-          <span>input history</span>
+          <span data-i18n="result.inputHistory">input history</span>
           <button
             id="copyWordsListButton"
             class="textButton resultInlineButton"
             aria-label="Copy words list"
+            data-i18n-aria="result.copyWords"
             data-balloon-pos="up"
             tabindex="-1"
           >
@@ -179,6 +193,7 @@
             id="copyMissedWordsListButton"
             class="textButton"
             aria-label="Copy missed words list"
+            data-i18n-aria="result.copyMissedWords"
             data-balloon-pos="up"
             tabindex="-1"
           >
@@ -188,6 +203,7 @@
             id="toggleBurstHeatmap"
             class="textButton resultInlineButton"
             aria-label="Toggle burst heatmap"
+            data-i18n-aria="result.toggleBurstHeatmap"
             data-balloon-pos="up"
             tabindex="-1"
           >
@@ -207,11 +223,12 @@
       </div>
       <div id="resultReplay" class="hidden">
         <div class="title">
-          watch replay
+          <span data-i18n="result.watchReplay">watch replay</span>
           <button
             id="playpauseReplayButton"
             class="textButton resultInlineButton"
             aria-label="Start replay"
+            data-i18n-aria="result.startReplay"
             data-balloon-pos="up"
             tabindex="-1"
           >
@@ -225,13 +242,14 @@
       </div>
       <button id="retrySavingResultButton" class="danger hidden">
         <i class="fas fa-redo"></i>
-        Retry saving result
+        <span data-i18n="result.retrySaving">Retry saving result</span>
       </button>
       <div class="buttons">
         <button
           class="text"
           id="nextTestButton"
           aria-label="Next test"
+          data-i18n-aria="result.nextTest"
           role="button"
           data-balloon-pos="down"
         >
@@ -241,6 +259,7 @@
           class="text"
           id="restartTestButtonWithSameWordset"
           aria-label="Repeat test"
+          data-i18n-aria="result.repeatTest"
           role="button"
           data-balloon-pos="down"
         >
@@ -250,6 +269,7 @@
           class="text"
           id="practiseWordsButton"
           aria-label="Practice words"
+          data-i18n-aria="result.practiseWords"
           role="button"
           data-balloon-pos="down"
         >
@@ -259,6 +279,7 @@
           class="text"
           id="showWordHistoryButton"
           aria-label="Toggle words history"
+          data-i18n-aria="result.toggleWordsHistory"
           role="button"
           data-balloon-pos="down"
         >
@@ -268,6 +289,7 @@
           class="text"
           id="watchReplayButton"
           aria-label="Watch replay"
+          data-i18n-aria="result.watchReplay"
           role="button"
           data-balloon-pos="down"
         >
@@ -277,6 +299,7 @@
           class="text"
           id="saveScreenshotButton"
           aria-label="Copy screenshot to clipboard&#10;(shift click to download)"
+          data-i18n-aria="result.screenshot"
           role="button"
           data-balloon-pos="down"
           data-balloon-break

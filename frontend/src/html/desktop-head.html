@@ -1,0 +1,62 @@
+<head>
+  <!-- pockettype: Hell/Dunkel wie vibe learning, vor dem ersten Zeichnen -->
+  <script>
+    (function () {
+      var t = null;
+      try {
+        t = localStorage.getItem("wenn-theme");
+      } catch (e) {}
+      document.documentElement.dataset.theme =
+        t ||
+        (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    })();
+  </script>
+  <!-- pockettype: Menüleiste und Anmeldung von vibe learning (pb_public/), fehlen sie, läuft die Seite ohne -->
+  <script src="../katalog.js"></script>
+  <script src="../nav.js"></script>
+  <script src="../sync.js"></script>
+  <link
+    rel="preload"
+    href="/webfonts/RobotoMono-Regular.woff2"
+    type="font/woff2"
+    as="font"
+    crossorigin
+  />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="pockettype: Tipptrainer für den Unterricht, basiert auf Monkeytype."
+  />
+  <meta name="darkreader-lock" />
+  <title>pockettype</title>
+  <style>
+    :root {
+      --bg-color: #323437;
+      --main-color: #e2b714;
+      --caret-color: #e2b714;
+      --sub-color: #646669;
+      --sub-alt-color: #2c2e31;
+      --text-color: #d1d0c5;
+      --error-color: #ca4754;
+      --error-extra-color: #7e2a33;
+      --colorful-error-color: #ca4754;
+      --colorful-error-extra-color: #7e2a33;
+      --nav-focus-opacity: 0;
+    }
+    @layer normalize;
+    @layer theme;
+    @layer base;
+    @layer components;
+    @layer properties;
+    @layer vendor;
+    @layer custom-styles;
+    @layer hidden;
+    @layer utilities;
+  </style>
+  <link rel="icon" type="image/svg+xml" href="/images/favicon/favicon.svg" />
+  <link rel="stylesheet" href="styles/index.scss" />
+  <link rel="stylesheet" href="styles/tailwind.css" />
+  <link rel="stylesheet" href="styles/vendor.scss" />
+  <style class="customFont" type="text/css"></style>
+</head>
